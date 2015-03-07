@@ -1,0 +1,24 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+public class Game <T> {
+	Player p1;
+	Player p2;
+	Player p3;
+	
+	BuildingPool buildingTiles;
+	ProductionPool productionTiles;
+	ArrayList<ProductionTile> pList = new ArrayList<ProductionTile>();
+	
+	public void initialize() {
+	}
+	
+	public T getRandomFromList (ArrayList<T> genericList) {
+		Random rand = new Random();
+		int index = rand.nextInt(genericList.size());
+		T temp = genericList.get(index);
+		genericList.remove(index);
+		return temp;
+		
+	}
+}
