@@ -20,8 +20,8 @@ public class Game implements InitializeGame{
 	 */
 	Game() {
 		player1 = new Player("Player1", true);
-		player2 = new Player("Player2", true);
-		player3 = new Player("Player3", true);
+		player2 = new Player("Player2", false);
+		player3 = new Player("Player3", false);
 		productionPool  = new ArrayList<ProductionTile>(); 
 		bank = new int[5];
 	}

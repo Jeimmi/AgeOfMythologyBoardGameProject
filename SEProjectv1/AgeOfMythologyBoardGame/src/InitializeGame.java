@@ -387,11 +387,13 @@ public interface InitializeGame{
 				}
 				if(options.size() > 0){
 					UserInterface<ProductionTile> ui = new UserInterface<ProductionTile>();
-					ui.provideMenuOptions("Select a resource tile", game.activePlayer, playerOptions, "Pass");
+					ui.provideMenuOptions("Select a resource tile :", game.activePlayer, playerOptions, "Pass");
 					ProductionTile selected = ui.getPlayerSelection(game.activePlayer, playerOptions, true);
-					game.activePlayer.production.add(selected);
-					options.remove(selected);
-					game.activePlayer.terrainAvailable.remove(selected.type);
+					if(selected != null){
+						game.activePlayer.production.add(selected);
+						options.remove(selected);
+						game.activePlayer.terrainAvailable.remove(selected.type);
+					}
 				}
 				if(j < numberOfPlayers - 1){
 					if(reverseFlag){

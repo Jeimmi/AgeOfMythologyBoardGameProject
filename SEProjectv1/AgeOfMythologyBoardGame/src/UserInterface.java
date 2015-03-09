@@ -1,8 +1,23 @@
+/**
+ * @author Lyndon Kondratczyk
+ * @version 3/9/15
+ * 
+ * A tool that creates a menu for displaying and selecting entries from a 
+ * generic ArrayList
+ */
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface <T>{
 	
+	/**
+	 * Prints a list of menu options fed as an ArrayList
+	 * 
+	 * @param prompt The text label for the menu option
+	 * @param player The Player making the selection
+	 * @param options The ArrayList containing the menu options
+	 * @param passOption The text label for the "pass" options if available
+	 */
 	public void provideMenuOptions(String prompt, Player player, ArrayList<T> options, String passOption){
 		if(player.human){
 			System.out.println(player.name + " : " + prompt);
@@ -15,6 +30,14 @@ public class UserInterface <T>{
 		}
 	}
 	
+	/**
+	 * Gets and returns the content of an ArrayList selected by a Player
+	 * 
+	 * @param player The Player making the selection
+	 * @param options The list of menu options
+	 * @param passOption True if the option to "pass" is available
+	 * @return The player's selected object
+	 */
 	public T getPlayerSelection(Player player, ArrayList<T> options, boolean passOption){
 		int passAvailable = 0;
 		if(player.human = true){
@@ -38,10 +61,17 @@ public class UserInterface <T>{
 		else{
 			RandomSelection<T> optionsList = new RandomSelection<T>(options);
 			T selection = optionsList.getRandomFromList();
+			optionsList.returnToList(selection);
 			return selection;
 		}
 	}
 	
+	/**
+	 * Displays a reader-friendly list using toString given a generic ArrayList
+	 * 
+	 * @param title The label for the list
+	 * @param genericList The contents of the list
+	 */
 	public void displayList(String title, ArrayList<T> genericList){
 		System.out.print(title + " : ");
 		for(int i = 0; i < genericList.size(); i++){
@@ -53,7 +83,12 @@ public class UserInterface <T>{
 	}
 	
 
-		
+	/**
+	 * Prints the current state of a Game
+	 * 
+	 * @param title The title of the printout
+	 * @param game The game being printed
+	 */
 	public void displayGamestate(String title, Game game){
 		
 		Player playerPointer;
