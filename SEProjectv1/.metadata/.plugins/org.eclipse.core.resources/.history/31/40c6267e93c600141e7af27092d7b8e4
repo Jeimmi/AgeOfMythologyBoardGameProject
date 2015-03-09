@@ -54,7 +54,7 @@ public interface InitializeGame{
 		int numberOfPlayers = 3;
 		for(int i = 0; i < numberOfPlayers; i++){
 			RandomSelection<Player.Race> selector = new RandomSelection<Player.Race>(playerRace);
-			game.activePlayer.playerRace = selector.getRandomFromList(true);
+			game.activePlayer.playerRace = selector.getRandomFromList();
 			game.activePlayer = game.activePlayer.next;
 		}
 	}

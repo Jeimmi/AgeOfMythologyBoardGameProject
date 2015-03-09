@@ -52,6 +52,6 @@ public class Player {
 	 */
 	public void drawRandomCard(ArrayList<Card> deck) {
 		RandomSelection<Card> selector = new RandomSelection<Card>(deck);
-		hand.add(selector.getRandomFromList());
+		hand.add(selector.getRandomFromList(true));
 	}
 }

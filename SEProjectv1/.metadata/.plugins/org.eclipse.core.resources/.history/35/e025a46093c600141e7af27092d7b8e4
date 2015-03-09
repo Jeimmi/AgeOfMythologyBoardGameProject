@@ -40,7 +40,7 @@ public class UserInterface <T>{
 	 */
 	public T getPlayerSelection(Player player, ArrayList<T> options, boolean passOption){
 		int passAvailable = 0;
-		if(player.human == true){
+		if(player.human = true){
 			Scanner input = new Scanner(System.in);
 			int selection = -1;
 			if(passOption){
@@ -61,6 +61,7 @@ public class UserInterface <T>{
 		else{
 			RandomSelection<T> optionsList = new RandomSelection<T>(options);
 			T selection = optionsList.getRandomFromList(false);
+			optionsList.returnToList(selection);
 			return selection;
 		}
 	}

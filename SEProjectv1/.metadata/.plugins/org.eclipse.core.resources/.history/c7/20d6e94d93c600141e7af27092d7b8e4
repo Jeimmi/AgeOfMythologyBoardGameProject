@@ -24,12 +24,11 @@ public class RandomSelection <T>{
 	 * 
 	 * @return The removed Object from options
 	 */
-	public T getRandomFromList (boolean remove) {
+	public T getRandomFromList () {
 		Random rand = new Random();
 		int index = rand.nextInt(options.size());
 		T temp = options.get(index);
-		if(remove)
-			options.remove(index);
+		options.remove(index);
 		return temp;
 		
 	}
