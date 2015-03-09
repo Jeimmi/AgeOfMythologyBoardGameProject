@@ -17,4 +17,30 @@ public class ProductionTile {
 		resource[3] = favor;
 		this.quantity = quantity;
 	}
+	
+	@Override
+	public String toString(){
+		String resources = "";
+		for(int i = 0; i < resource.length; i ++){
+			if(resource[i] > 0){
+				resources = resources + resource[i];
+				switch(i){
+					case 0: 
+						resources = resources + " Food";
+						break;
+					case 1: 
+						resources = resources + " Wood";
+						break;
+					case 2: 
+						resources = resources + " Gold";
+						break;
+					case 3: 
+						resources = resources + " Favor";
+						break;
+					default: break;
+				}
+			}
+		}
+		return ("" + type + " : " + resources);
+	}
 }

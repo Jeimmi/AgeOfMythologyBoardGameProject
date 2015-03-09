@@ -1,0 +1,113 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import Player.Race;
+
+public class UserInterface <T>{
+	
+	public void provideMenuOptions(String prompt, Player player, ArrayList<T> options, String passOption){
+		if(player.human){
+			System.out.println(player.name + " : " + prompt);
+			for(int i = 0; i < options.size(); i++){
+				System.out.println("(" + i + ")" + options.get(i).toString());
+				if(i == (options.size() - 1)){
+					System.out.println("(" + (i + 1) + ") " + passOption);
+				}
+			}
+		}
+	}
+	
+	public T getPlayerSelection(Player player, ArrayList<T> options, boolean passOption){
+		int passAvailable = 0;
+		if(player.human = true){
+			Scanner input = new Scanner(System.in);
+			int selection = -1;
+			if(passOption){
+				passAvailable ++;
+			}
+	
+			while((selection < 0) || (selection >= options.size() + passAvailable)){
+				if(selection != -1){
+					System.out.println("Invalid selection, please try again.");
+				}
+				selection = input.nextInt();
+			}
+			if(selection == options.size()){
+				return null;
+			}
+			return options.get(selection);
+		}
+		else{
+			RandomSelection<T> optionsList = new RandomSelection<T>(options);
+			T selection = optionsList.getRandomFromList();
+			return selection;
+		}
+	}
+	
+	public void displayList(String title, ArrayList<T> genericList){
+		System.out.print(title + " : ");
+		for(int i = 0; i < genericList.size(); i++){
+			System.out.print(genericList.get(i) + " , ");
+		}
+	}
+	
+	public void displayIntArray(String title, int[] financial){
+		System.out.print(title + " : ");
+		for(int i = 0; i < financial.length; i++){
+			switch(i){
+				case 0: 
+					System.out.print(financial[i] + " Food");
+					break;
+				case 1: 
+					System.out.print(financial[i] + " Wood");
+					break;
+				case 2: 
+					System.out.print(financial[i] + " Gold");
+					break;
+				case 3: 
+					System.out.print(financial[i] + " Favor");
+					break;
+				case 4: 
+					System.out.print(financial[i] + " Victory");
+					break;
+				default: break;
+			}
+			System.out.print(" , ");
+		}
+	}
+		
+	public void displayGamestate(String title, Game game){
+		
+		Player playerPointer;
+		playerPointer = game.activePlayer;
+		//UserInterface<Integer> wallet = new UserInterface<Integer>();
+		
+		UserInterface<Integer> wallet = new UserInterface<Integer>();
+		displayArray(("" + playerPointer.name + "'s wallet:" + playerPointer.wallet);
+		displayGamestate(playerPointer.wallet);
+		
+		protected int[] bank;
+		protected Race playerRace;
+		protected ArrayList<ProductionTile.Terrain> terrainAvailable;
+		private ArrayList<Card> hand;
+		protected ArrayList<ProductionTile> production;
+		protected ArrayList<Building> city;
+		protected int[] wallet;
+		protected boolean human;
+		//bank
+		//active player hand
+		//active player resources
+		//active player terrain available
+		//active player production
+		//active player city
+		//opp player name
+		//opp player race
+		//opp player back of hand x2
+		//opp player resources x2
+		//opp player terrain available x2
+		//opp player production x2
+		//opp player city x2
+		protected ArrayList<ProductionTile> productionPool;
+		
+	}
+}

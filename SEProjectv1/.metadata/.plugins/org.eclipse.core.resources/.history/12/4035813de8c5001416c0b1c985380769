@@ -1,0 +1,22 @@
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+public class BuildingCard extends Card {
+	public BuildingCard(BufferedImage front, BufferedImage back,
+			boolean permanent, String name, String firstDescription,
+			String secondDescription, int value, int cost) {
+		super(front, back, permanent, name, firstDescription,
+				secondDescription, value, cost);
+	}
+
+	public ArrayList<Building> populateAvailable(Player p, int i) {
+	}
+	
+	
+
+	@Override
+	public void execute(Player player, UserInterface ui) {
+		// TODO Auto-generated method stub
+
+	}
+}

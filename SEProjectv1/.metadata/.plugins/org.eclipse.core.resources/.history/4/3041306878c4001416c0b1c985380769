@@ -1,0 +1,27 @@
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Queue;
+public class Game{
+	
+	protected Player player1;
+	protected Player player2;
+	protected Player player3;	
+	private ProductionPool productionTiles;
+	private ArrayList<ProductionTile> playerList = new ArrayList<ProductionTile>();
+	
+	Game() {
+		player1 = new Player();
+		player2 = new Player();
+		player3 = new Player();
+		
+	}
+	public void initialize() {
+	}
+	
+	
+	public static void main(String [] args){
+		Game game = new Game();
+		RandomSelection<Card> selection = new RandomSelection<Card>(game.p1.randomDeck);
+		Card temp = selection.getRandomFromList();
+	}
+}
