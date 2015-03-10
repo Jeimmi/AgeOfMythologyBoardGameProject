@@ -20,8 +20,8 @@ public class Game implements InitializeGame{
 	 */
 	Game() {
 		player1 = new Player("Player1", true);
-		player2 = new Player("Player2", false);
-		player3 = new Player("Player3", false);
+		player2 = new Player("Player2", true);
+		player3 = new Player("Player3", true);
 		productionPool  = new ArrayList<ProductionTile>(); 
 		bank = new int[5];
 	}
@@ -59,13 +59,86 @@ public class Game implements InitializeGame{
 		System.out.println("");
 	}
 	
+	public void drawCards(){
+		int handSize;
+		int numberOfPlayers = 3;
+		UserInterface<Card> drawDeck = new UserInterface<Card>(); 
+		
+		for(int i = 0; i < numberOfPlayers; i ++){
+			Card choice = activePlayer.permanentDeck.get(0);
+			switch(activePlayer.playerAge){
+			case ARCHAIC:
+				handSize = 4; 
+				break;
+			case CLASSICAL:
+				handSize = 5;
+				break;
+			case HERIOC:
+				handSize = 6;
+				break;
+			case MYTHIC:
+				handSize = 7;
+				break;
+			default:
+				handSize = 4;
+				break;
+			}
+			do{
+				drawDeck.provideMenuOptions("Select a permanent card or pass", activePlayer, 
+						activePlayer.permanentDeck, "Draw " + (handSize - activePlayer.hand.size()) +
+								" cards from the random deck");
+				choice = drawDeck.getPlayerSelection(activePlayer, activePlayer.permanentDeck, true);
+				if(choice != null){
+					activePlayer.hand.add(choice);	
+					activePlayer.permanentDeck.remove(choice);	
+				}
+			}
+			while((activePlayer.hand.size() <= handSize) && (choice != null) && (activePlayer.randomDeck.size() > 1));
+			while(activePlayer.hand.size() < handSize){
+				if(activePlayer.randomDeck.size() == 0){
+					activePlayer.randomDeck = activePlayer.usedRandomDeck;
+					activePlayer.usedRandomDeck = new ArrayList<Card>();
+				}
+				RandomSelection<Card> selector = new RandomSelection<Card>(activePlayer.randomDeck);
+				activePlayer.hand.add(selector.getRandomFromList(true));
+			}
+			activePlayer = activePlayer.next;
+		}
+	}
+	
+	public void setVictoryPoint(){
+		
+	}
+	
+	public void handleSpoilage(){
+		
+	}
+	
+	public void actionCardPhase(){
+		int numberOfPlayers = 3;
+		for(int i = 0; i < numberOfPlayers*3; i++){
+			playActionCard();
+			activePlayer= activePlayer.next;
+		}
+	}
+	
+	public void playActionCard(){
+		UserInterface<Card> ui = new UserInterface<Card>();
+		ui.provideMenuOptions("Select an Action Card to play: ", activePlayer, activePlayer.hand, "");
+		Card selection = ui.getPlayerSelection(activePlayer, activePlayer.hand, false);
+		activePlayer.hand.remove(selection);
+		selection.execute(this);
+	}
+	
 	/**
 	 * Executes the turn sequences managed by the game
 	 */
 	public void run(){
 		InitializeGame.initialize(this);
 		UserInterface<Game> ui = new UserInterface<Game>();
+		drawCards();
 		ui.displayGamestate("Current Gamestate:", this);
+		actionCardPhase();
 	}
 	
 	/**

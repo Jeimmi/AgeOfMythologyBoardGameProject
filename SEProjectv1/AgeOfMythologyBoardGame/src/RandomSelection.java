@@ -22,6 +22,7 @@ public class RandomSelection <T>{
 	/**
 	 * Chooses a random element from options, removes it and returns it
 	 * 
+	 * @param remove True if item selected is to be removed
 	 * @return The removed Object from options
 	 */
 	public T getRandomFromList (boolean remove) {

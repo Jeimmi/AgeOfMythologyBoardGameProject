@@ -26,6 +26,9 @@ public class UserInterface <T>{
 				if(i == (options.size() - 1)){
 					System.out.println("(" + (i + 1) + ") " + passOption);
 				}
+				if(options.size() == 0){
+					System.out.println("(0) " + passOption);
+				}
 			}
 		}
 	}

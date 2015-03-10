@@ -82,8 +82,7 @@ public abstract class Card {
 				discountUsed = discountUsed + temp;
 				game.activePlayer.wallet[i] = game.activePlayer.wallet[i] - selection.cost[i] + temp;
 				game.bank[i] = game.bank[i] + selection.cost[i] - discountUsed;
-				refund[i] = refund[i] + refund[i] - discountUsed;
-				
+				refund[i] = refund[i] + refund[i] - discountUsed;	
 			}
 			else{
 				game.activePlayer.wallet[i] = game.activePlayer.wallet[i] - selection.cost[i];
@@ -98,8 +97,13 @@ public abstract class Card {
 	
 	@Override
 	public String toString(){
-		return ("" + name + " : " + firstDescription + " : " + secondDescription +
-				" : Cost - " + cost + "Favor" );
+		if(this.secondDescription.equals("")){
+			return ("|" + name + " : " + firstDescription + "|");
+		}
+		else{
+			return ("|" + name + " : " + firstDescription + " : " + secondDescription +
+					" : Cost - " + cost + "Favor|" );
+		}
 	}
 
 	public abstract void execute(Game game);

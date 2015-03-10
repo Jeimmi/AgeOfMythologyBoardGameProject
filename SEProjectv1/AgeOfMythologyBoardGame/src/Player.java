@@ -45,13 +45,5 @@ public class Player {
 		this.human = human;
 	}
 	
-	/**
-	 * Transfers a random card from a deck to a Player's hand
-	 * 
-	 * @param deck The deck being drawn from
-	 */
-	public void drawRandomCard(ArrayList<Card> deck) {
-		RandomSelection<Card> selector = new RandomSelection<Card>(deck);
-		hand.add(selector.getRandomFromList(true));
-	}
+
 }

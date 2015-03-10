@@ -44,7 +44,7 @@ public class BuildCard extends Card {
 		for(int i = 0; i < player.buildingPool.size(); i++){
 			if(!(toCheck.contains(player.buildingPool.get(i)))){
 				toCheck.add(player.buildingPool.get(i));
-			}
+			} 
 		}
 		
 		ArrayList<Building> tempList = new ArrayList<Building>();
