@@ -59,6 +59,10 @@ public class Game implements InitializeGame{
 		System.out.println("");
 	}
 	
+	/**
+	 * Manages the Draw Cards phase in the turn sequence, as well 
+	 * as managing the player interaction during permanent deck selection 
+	 */
 	public void drawCards(){
 		int handSize;
 		int numberOfPlayers = 3;
@@ -114,6 +118,10 @@ public class Game implements InitializeGame{
 		
 	}
 	
+	/**
+	 * Manages the Action Card phase in the game's turn sequence
+	 * @param ui The user interface managing board display so a player ca
+	 */
 	public void actionCardPhase(){
 		int numberOfPlayers = 3;
 		for(int i = 0; i < numberOfPlayers*3; i++){
@@ -122,9 +130,12 @@ public class Game implements InitializeGame{
 		}
 	}
 	
+	/**
+	 * Handles the Player's interaction of Card selection
+	 */
 	public void playActionCard(){
 		UserInterface<Card> ui = new UserInterface<Card>();
-		ui.provideMenuOptions("Select an Action Card to play: ", activePlayer, activePlayer.hand, "");
+		ui.provideMenuOptions("Select an Action Card to play: ", activePlayer, activePlayer.hand, null);
 		Card selection = ui.getPlayerSelection(activePlayer, activePlayer.hand, false);
 		activePlayer.hand.remove(selection);
 		selection.execute(this);

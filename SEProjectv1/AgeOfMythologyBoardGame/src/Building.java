@@ -143,7 +143,7 @@ public class Building {
 		String resource;
 		
 		for(int i = 0; i < 4; i++){
-			if(cost[i] > 0){
+			//if(cost[i] > 0){
 				switch(i){
 					case(0): resource = "food";
 					case(1): resource = "wood";
@@ -155,7 +155,7 @@ public class Building {
 						if(i<3){
 							displayCost = displayCost + ", ";
 						}
-			}
+			//}
 		}
 		return displayCost;
 	}

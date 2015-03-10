@@ -23,12 +23,12 @@ public class UserInterface <T>{
 			System.out.println(player.name + " : " + prompt);
 			for(int i = 0; i < options.size(); i++){
 				System.out.println("(" + i + ")" + options.get(i).toString());
-				if(i == (options.size() - 1)){
+				if((i == (options.size() - 1) && passOption != null)){
 					System.out.println("(" + (i + 1) + ") " + passOption);
 				}
-				if(options.size() == 0){
-					System.out.println("(0) " + passOption);
-				}
+			}
+			if((options.size() == 0) && (!(passOption.equals(null)))){
+				System.out.println("(0) " + passOption);
 			}
 		}
 	}
@@ -75,7 +75,7 @@ public class UserInterface <T>{
 	 * @param genericList The contents of the list
 	 */
 	public void displayList(String title, ArrayList<T> genericList){
-		System.out.print(title + " : ");
+		System.out.print(title);
 		for(int i = 0; i < genericList.size(); i++){
 			System.out.print(genericList.get(i));
 			if(i < genericList.size() - 1)

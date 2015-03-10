@@ -74,25 +74,9 @@ public abstract class Card {
 	 * 
 	 * @return The amount of the discount used in the transaction
 	 */
-	public int addBuilding(Game game, Building selection, int[] refund){
-		int discountUsed = 0;
-		for(int i = 0; i < 4; i ++){
-			if(game.activePlayer.wallet[i] < selection.cost[i]){
-				int temp = selection.cost[i] - game.activePlayer.wallet[i];
-				discountUsed = discountUsed + temp;
-				game.activePlayer.wallet[i] = game.activePlayer.wallet[i] - selection.cost[i] + temp;
-				game.bank[i] = game.bank[i] + selection.cost[i] - discountUsed;
-				refund[i] = refund[i] + refund[i] - discountUsed;	
-			}
-			else{
-				game.activePlayer.wallet[i] = game.activePlayer.wallet[i] - selection.cost[i];
-				game.bank[i] = game.bank[i] + selection.cost[i];
-				refund[i] = refund[i] + refund[i];
-			}
-		}
+	public void addBuilding(Game game, Building selection){
 		game.activePlayer.buildingPool.remove(selection);
 		game.activePlayer.city.add(selection);
-		return discountUsed;
 	}
 	
 	@Override

@@ -65,11 +65,13 @@ public interface InitializeGame{
 	 * @param game With the Players and bank to be worked on
 	 */
 	public static void initializeResources(Game game){
+		int numberOfPlayers = 3;
 		for(int i = 0; i < 4; i++ ){
 			game.bank[i] = 25;
-			game.player1.wallet[i] = 4;
-			game.player2.wallet[i] = 4;
-			game.player3.wallet[i] = 4;
+			for(int j = 0; j < numberOfPlayers; j++){
+				game.activePlayer.wallet[i] = 6;
+				game.activePlayer = game.activePlayer.next;
+			}
 		}
 		game.bank[4] = 25;
 		int turnOrder = (int)(Math.random()*3);
