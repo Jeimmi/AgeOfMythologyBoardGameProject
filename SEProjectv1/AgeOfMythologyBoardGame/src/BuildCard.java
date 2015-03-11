@@ -85,7 +85,6 @@ public class BuildCard extends Card {
 		for(int i = 0; i < player.city.size(); i++){
 			if((player.city.get(i)).type == Building.Type.QUARRY){
 				discount = 1;
-				System.out.println("DISCOUNT APPLIED");
 			}
 		}
 		for(int i = 0; i < player.buildingPool.size(); i++){
@@ -187,6 +186,7 @@ public class BuildCard extends Card {
 						game.activePlayer, refundOptions, false);
 				switch(refund){
 				case("food"):
+					System.out.println();
 					game.activePlayer.wallet[0] += 1;
 					refundAvailable[0] -= 1;
 					break;

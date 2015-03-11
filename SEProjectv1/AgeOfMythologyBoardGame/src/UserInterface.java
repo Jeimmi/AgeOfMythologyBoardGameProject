@@ -45,13 +45,13 @@ public class UserInterface <T>{
 		int passAvailable = 0;
 		if(player.human == true){
 			Scanner input = new Scanner(System.in);
-			int selection = -1;
+			int selection = -99;
 			if(passOption){
 				passAvailable ++;
 			}
 	
 			while((selection < 0) || (selection >= options.size() + passAvailable)){
-				if(selection != -1){
+				if(selection != -99){
 					System.out.println("Invalid selection, please try again.");
 				}
 				selection = input.nextInt();
@@ -61,10 +61,13 @@ public class UserInterface <T>{
 			}
 			return options.get(selection);
 		}
-		else{
+		else if(options.size() > 0){
 			RandomSelection<T> optionsList = new RandomSelection<T>(options);
 			T selection = optionsList.getRandomFromList(false);
 			return selection;
+		}
+		else{
+			return null;
 		}
 	}
 	

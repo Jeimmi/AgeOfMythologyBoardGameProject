@@ -32,7 +32,6 @@ public class RandomSelection <T>{
 		if(remove)
 			options.remove(index);
 		return temp;
-		
 	}
 	
 	/**

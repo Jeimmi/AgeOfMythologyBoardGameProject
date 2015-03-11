@@ -4,4 +4,5 @@
 <fullyQualifiedTypeName name="java.lang.Math"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="Player.Race"/>
+<fullyQualifiedTypeName name="Building.Type"/>
 </qualifiedTypeNameHistroy>

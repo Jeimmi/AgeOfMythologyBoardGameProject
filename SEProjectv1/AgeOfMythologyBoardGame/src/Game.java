@@ -19,9 +19,9 @@ public class Game implements InitializeGame{
 	 * The default constructor for a game 
 	 */
 	Game() {
-		player1 = new Player("Player1", true);
-		player2 = new Player("Player2", true);
-		player3 = new Player("Player3", true);
+		player1 = new Player("Player1", false);
+		player2 = new Player("Player2", false);
+		player3 = new Player("Player3", false);
 		productionPool  = new ArrayList<ProductionTile>(); 
 		bank = new int[5];
 	}
@@ -114,18 +114,15 @@ public class Game implements InitializeGame{
 		
 	}
 	
-	public void handleSpoilage(){
-		
-	}
-	
 	/**
 	 * Manages the Action Card phase in the game's turn sequence
 	 * @param ui The user interface managing board display so a player ca
 	 */
-	public void actionCardPhase(){
+	public void actionCardPhase(boolean victory){
 		int numberOfPlayers = 3;
 		for(int i = 0; i < numberOfPlayers*3; i++){
 			playActionCard();
+			victory = checkForVictory();
 			activePlayer= activePlayer.next;
 		}
 	}
@@ -134,22 +131,104 @@ public class Game implements InitializeGame{
 	 * Handles the Player's interaction of Card selection
 	 */
 	public void playActionCard(){
-		UserInterface<Card> ui = new UserInterface<Card>();
-		ui.provideMenuOptions("Select an Action Card to play: ", activePlayer, activePlayer.hand, null);
-		Card selection = ui.getPlayerSelection(activePlayer, activePlayer.hand, false);
-		activePlayer.hand.remove(selection);
-		selection.execute(this);
+		if(!checkForVictory()){
+			UserInterface<Card> ui = new UserInterface<Card>();
+			ui.provideMenuOptions("Select an Action Card to play: ", activePlayer, activePlayer.hand, null);
+			Card selection = ui.getPlayerSelection(activePlayer, activePlayer.hand, false);
+			activePlayer.hand.remove(selection);
+			selection.execute(this);
+		}
+	}
+
+	/**
+	 * At the end of the turn phase, this method reduces each players resources
+	 * to no more than 5 of each without a Storehouse and 8 with a Storehouse 
+	 */
+	public void handleSpoilage(){
+		int numberOfPlayers = 3;
+		int storeHouse;
+		for(int i = 0; i < numberOfPlayers; i++){
+			storeHouse = 0;
+			for(int j = 0; j < activePlayer.city.size(); j++){
+				if(activePlayer.city.get(j).type == Building.Type.STOREHOUSE){
+					storeHouse = 3;
+				}
+			}
+			for(int k = 0; k < 4; k++){
+				if(activePlayer.wallet[k] > 5 + storeHouse){
+					bank[k] = bank[k] + activePlayer.wallet[k] - (5 + storeHouse);
+					activePlayer.wallet[k] = (5 + storeHouse);
+				}
+			}
+			activePlayer = activePlayer.next;
+		}
+	}
+	
+	/**
+	 * After each build card is played, this checks to see if The Wonder was
+	 * built. We wait until after all builds have been used to allow the player
+	 * to exhaust their build card before ending the game
+	 * 
+	 * @return True if The Wonder has been built
+	 */
+	public boolean checkForVictory(){
+		int numberOfPlayers = 3;
+		for(int i = 0; i < numberOfPlayers; i++){
+			for(int j = 0; j < activePlayer.city.size(); j++){
+				if(activePlayer.city.get(j).type == Building.Type.THE_WONDER){
+					return true;
+				}
+			}
+			activePlayer = activePlayer.next;
+		}
+		return false;
+	}
+	
+	/**
+	 * At the end of the game, this takes the Players and determines who the winner is
+	 * 
+	 * @return A randomly drawn winner of those with the most victory points
+	 */
+	public Player findWinner(){
+		int numberOfPlayers = 3;
+		ArrayList<Player> winnerCandidates = new ArrayList<Player>();
+		Player winnerBase = activePlayer;
+		for(int i = 0; i < numberOfPlayers - 1; i++){
+			activePlayer = activePlayer.next;
+			if(winnerBase.wallet[4] < activePlayer.wallet[4]){
+				winnerBase = activePlayer;
+			}
+		}
+		activePlayer = activePlayer.next.next;
+		winnerCandidates.add(winnerBase);
+		for(int i = 0; i < numberOfPlayers - 1; i++){
+			if(winnerBase.wallet[4] == activePlayer.wallet[4]){
+				winnerCandidates.add(activePlayer);
+			}
+			activePlayer = activePlayer.next;
+		}
+		RandomSelection<Player> selector = new RandomSelection<Player>(winnerCandidates);
+		return selector.getRandomFromList(false);
 	}
 	
 	/**
 	 * Executes the turn sequences managed by the game
 	 */
 	public void run(){
+		boolean victory = false;
 		InitializeGame.initialize(this);
 		UserInterface<Game> ui = new UserInterface<Game>();
-		drawCards();
-		ui.displayGamestate("Current Gamestate:", this);
-		actionCardPhase();
+		do{
+			drawCards();
+			ui.displayGamestate("Current Gamestate:", this);
+			actionCardPhase(victory);
+			if(!checkForVictory()){
+				handleSpoilage();
+				ui.displayGamestate("Current Gamestate:", this);
+			}
+		}
+		while(!checkForVictory());
+		System.out.println("The Winner is: " + (findWinner()).name);
 	}
 	
 	/**
@@ -159,6 +238,7 @@ public class Game implements InitializeGame{
 	 */
 	public static void main(String [] args){
 		Game game = new Game();
-		game.run();		
+		InitializeGame.initialize(game);
+		game.run();	
 	}
 }
