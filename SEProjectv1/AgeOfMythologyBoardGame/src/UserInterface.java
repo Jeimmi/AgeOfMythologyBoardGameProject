@@ -18,9 +18,10 @@ public class UserInterface <T>{
 	 * @param options The ArrayList containing the menu options
 	 * @param passOption The text label for the "pass" options if available
 	 */
-	public void provideMenuOptions(String prompt, Player player, ArrayList<T> options, String passOption){
-		if(player.human){
-			System.out.println(player.name + " : " + prompt);
+	public void provideMenuOptions(String prompt, Game game, ArrayList<T> options, String passOption){
+		if(game.activePlayer.human){
+			displayGamestate("Current gamestate...", game);
+			System.out.println("\n\n" + game.activePlayer.name + " : " + prompt);
 			for(int i = 0; i < options.size(); i++){
 				System.out.println("(" + i + ")" + options.get(i).toString());
 				if((i == (options.size() - 1) && passOption != null)){
@@ -30,6 +31,9 @@ public class UserInterface <T>{
 			if((options.size() == 0) && (!(passOption.equals(null)))){
 				System.out.println("(0) " + passOption);
 			}
+		}
+		else{
+			displayGamestate("Current gamestate...", game);
 		}
 	}
 	
@@ -41,9 +45,9 @@ public class UserInterface <T>{
 	 * @param passOption True if the option to "pass" is available
 	 * @return The player's selected object
 	 */
-	public T getPlayerSelection(Player player, ArrayList<T> options, boolean passOption){
+	public T getPlayerSelection(Game game, ArrayList<T> options, boolean passOption){
 		int passAvailable = 0;
-		if(player.human == true){
+		if(game.activePlayer.human){
 			Scanner input = new Scanner(System.in);
 			int selection = -99;
 			if(passOption){
@@ -62,6 +66,7 @@ public class UserInterface <T>{
 			return options.get(selection);
 		}
 		else if(options.size() > 0){
+			displayGamestate("Current gamestate...", game);
 			RandomSelection<T> optionsList = new RandomSelection<T>(options);
 			T selection = optionsList.getRandomFromList(false);
 			return selection;
@@ -103,6 +108,7 @@ public class UserInterface <T>{
 		UserInterface<Card> hand = new UserInterface<Card>();
 		UserInterface<ProductionTile> productionArea = new UserInterface<ProductionTile>();
 		UserInterface<Building> cityArea = new UserInterface<Building>();
+	 
 		
 		System.out.println(title);
 		game.displayFunds("Bank: ", game.bank);
@@ -124,8 +130,11 @@ public class UserInterface <T>{
 			game.displayFunds("Wallet: ", playerPointer.wallet);
 			terrainAvailable.displayList("Available Terrain: ", playerPointer.terrainAvailable);
 			hand.displayList("Hand: ", playerPointer.hand);
+			System.out.println("Number of cards in rand deck :::: " + playerPointer.randomDeck.size());
+			System.out.println("Number of cards in used rand deck :::: " + playerPointer.usedRandomDeck.size());
 			productionArea.displayList("Prodcution Area: ", playerPointer.production);
 			cityArea.displayList("City Area: ", playerPointer.city);
+			cityArea.displayList("Available to build: ", playerPointer.buildingPool);
 			
 			playerPointer = playerPointer.next;
 		}		

@@ -31,15 +31,7 @@ public class RandomSelection <T>{
 		T temp = options.get(index);
 		if(remove)
 			options.remove(index);
+		System.out.println("*****AI selected : " + temp.toString() + "*****");
 		return temp;
-	}
-	
-	/**
-	 * Takes a generic object and places it in options
-	 * 
-	 * @param returnValue The Object to place options
-	 */
-	public void returnToList(T returnValue){
-		options.add(returnValue);
 	}
 }

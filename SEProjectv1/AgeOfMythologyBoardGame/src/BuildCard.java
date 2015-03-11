@@ -165,8 +165,8 @@ public class BuildCard extends Card {
 			int discountUsed = 0;
 			ArrayList<Building> options = populateAffordable(game.activePlayer, discount);
 			buildingSelect.provideMenuOptions("Please select a building to build from the following:", 
-					game.activePlayer, options, "Pass remainder of turn");
-			Building selection = buildingSelect.getPlayerSelection(game.activePlayer, options, true);
+					game, options, "Pass remainder of turn");
+			Building selection = buildingSelect.getPlayerSelection(game, options, true);
 			if(selection == null){
 				i = builds;
 			}
@@ -180,28 +180,32 @@ public class BuildCard extends Card {
 						refundOptions.add(resources.get(k));
 					}
 				}
-				refundSelect.provideMenuOptions("Select a refund: ", game.activePlayer,
-						refundOptions, null);
-				String refund = refundSelect.getPlayerSelection(
-						game.activePlayer, refundOptions, false);
-				switch(refund){
-				case("food"):
-					System.out.println();
-					game.activePlayer.wallet[0] += 1;
-					refundAvailable[0] -= 1;
-					break;
-				case("wood"):
-					game.activePlayer.wallet[1] += 1;
-					refundAvailable[1] -= 1;
-					break;
-				case("gold"):
-					game.activePlayer.wallet[2] += 1;
-					refundAvailable[2] -= 1;
-					break;
-				case("favor"):
-					game.activePlayer.wallet[3] += 1;
-					refundAvailable[3] -= 1;
-					break;
+				if(refundOptions.size() > 0){
+					refundSelect.provideMenuOptions("Select a refund: ", game,
+							refundOptions, null);
+					String refund = refundSelect.getPlayerSelection(
+							game, refundOptions, false);
+					switch(refund){
+					case("food"):
+						System.out.println();
+						game.activePlayer.wallet[0] += 1;
+						refundAvailable[0] -= 1;
+						break;
+					case("wood"):
+						game.activePlayer.wallet[1] += 1;
+						refundAvailable[1] -= 1;
+						break;
+					case("gold"):
+						game.activePlayer.wallet[2] += 1;
+						refundAvailable[2] -= 1;
+						break;
+					case("favor"):
+						game.activePlayer.wallet[3] += 1;
+						refundAvailable[3] -= 1;
+						break;
+					default:
+							break;
+					}
 				}
 			}
 		}		

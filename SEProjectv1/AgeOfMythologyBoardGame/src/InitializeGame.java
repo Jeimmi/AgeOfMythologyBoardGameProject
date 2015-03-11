@@ -95,7 +95,7 @@ public interface InitializeGame{
 			game.activePlayer.buildingPool.add(new Building(Building.Type.WOOD_WORKSHOP, 2,0,3,0));
 			game.activePlayer.buildingPool.add(new Building(Building.Type.GOLD_MINT, 3,2,0,0));
 			game.activePlayer.buildingPool.add(new Building(Building.Type.GREAT_TEMPLE, 4,4,4,4));
-			game.activePlayer.buildingPool.add(new Building(Building.Type.THE_WONDER, 10,10,10,10));
+			//game.activePlayer.buildingPool.add(new Building(Building.Type.THE_WONDER, 10,10,10,10));
 			
 			for(int j = 0; j < 10; j++){
 				game.activePlayer.buildingPool.add(new Building(Building.Type.HOUSE, 2,2,0,0));
@@ -166,22 +166,22 @@ public interface InitializeGame{
 						(null, null, true, "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 4 + " buildings",
+						(null, null, false, "Build up to " + 4 + " buildings",
 								"", 4, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer = game.activePlayer.next;
 				break;
@@ -193,22 +193,22 @@ public interface InitializeGame{
 						(null, null, true, "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 4 + " buildings",
+						(null, null, false, "Build up to " + 4 + " buildings",
 								"", 4, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer = game.activePlayer.next;
 				break;
@@ -220,19 +220,19 @@ public interface InitializeGame{
 						(null, null, true, "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 4 + " buildings",
+						(null, null, false, "Build up to " + 4 + " buildings",
 								"", 4, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer = game.activePlayer.next;
 				break;
@@ -371,7 +371,8 @@ public interface InitializeGame{
 	 */
 	public static void choosePlayerResources(Game game){
 		int numberOfPlayers = 3;
-		RandomSelection<ProductionTile> selector = new RandomSelection<ProductionTile>(game.productionPool);
+		RandomSelection<ProductionTile> selector = 
+				new RandomSelection<ProductionTile>(game.productionPool);
 		ArrayList<ProductionTile> options = new ArrayList<ProductionTile>();
 		boolean reverseFlag = false;
 		
@@ -388,8 +389,8 @@ public interface InitializeGame{
 				}
 				if(options.size() > 0){
 					UserInterface<ProductionTile> ui = new UserInterface<ProductionTile>();
-					ui.provideMenuOptions("Select a resource tile :", game.activePlayer, playerOptions, "Pass");
-					ProductionTile selected = ui.getPlayerSelection(game.activePlayer, playerOptions, true);
+					ui.provideMenuOptions("Select a resource tile :", game, playerOptions, "Pass");
+					ProductionTile selected = ui.getPlayerSelection(game, playerOptions, true);
 					if(selected != null){
 						game.activePlayer.production.add(selected);
 						options.remove(selected);

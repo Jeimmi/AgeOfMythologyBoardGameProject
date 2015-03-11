@@ -69,7 +69,7 @@ public class Game implements InitializeGame{
 		UserInterface<Card> drawDeck = new UserInterface<Card>(); 
 		
 		for(int i = 0; i < numberOfPlayers; i ++){
-			Card choice = activePlayer.permanentDeck.get(0);
+			Card choice;
 			switch(activePlayer.playerAge){
 			case ARCHAIC:
 				handSize = 4; 
@@ -88,10 +88,10 @@ public class Game implements InitializeGame{
 				break;
 			}
 			do{
-				drawDeck.provideMenuOptions("Select a permanent card or pass", activePlayer, 
+				drawDeck.provideMenuOptions("Select a permanent card or pass", this, 
 						activePlayer.permanentDeck, "Draw " + (handSize - activePlayer.hand.size()) +
 								" cards from the random deck");
-				choice = drawDeck.getPlayerSelection(activePlayer, activePlayer.permanentDeck, true);
+				choice = drawDeck.getPlayerSelection(this, activePlayer.permanentDeck, true);
 				if(choice != null){
 					activePlayer.hand.add(choice);	
 					activePlayer.permanentDeck.remove(choice);	
@@ -100,8 +100,10 @@ public class Game implements InitializeGame{
 			while((activePlayer.hand.size() <= handSize) && (choice != null) && (activePlayer.randomDeck.size() > 1));
 			while(activePlayer.hand.size() < handSize){
 				if(activePlayer.randomDeck.size() == 0){
-					activePlayer.randomDeck = activePlayer.usedRandomDeck;
-					activePlayer.usedRandomDeck = new ArrayList<Card>();
+					while(activePlayer.usedRandomDeck.size() != 0){
+						activePlayer.randomDeck.add(activePlayer.usedRandomDeck.get(0));
+						activePlayer.usedRandomDeck.remove(activePlayer.usedRandomDeck.get(0));
+					}
 				}
 				RandomSelection<Card> selector = new RandomSelection<Card>(activePlayer.randomDeck);
 				activePlayer.hand.add(selector.getRandomFromList(true));
@@ -118,11 +120,10 @@ public class Game implements InitializeGame{
 	 * Manages the Action Card phase in the game's turn sequence
 	 * @param ui The user interface managing board display so a player ca
 	 */
-	public void actionCardPhase(boolean victory){
+	public void actionCardPhase(){
 		int numberOfPlayers = 3;
 		for(int i = 0; i < numberOfPlayers*3; i++){
 			playActionCard();
-			victory = checkForVictory();
 			activePlayer= activePlayer.next;
 		}
 	}
@@ -133,8 +134,12 @@ public class Game implements InitializeGame{
 	public void playActionCard(){
 		if(!checkForVictory()){
 			UserInterface<Card> ui = new UserInterface<Card>();
-			ui.provideMenuOptions("Select an Action Card to play: ", activePlayer, activePlayer.hand, null);
-			Card selection = ui.getPlayerSelection(activePlayer, activePlayer.hand, false);
+			ui.provideMenuOptions("Select an Action Card to play: ", this, activePlayer.hand, null);
+			Card selection = ui.getPlayerSelection(this, activePlayer.hand, true);
+			if(selection.permanent)
+				activePlayer.permanentDeck.add(selection);
+			else
+				activePlayer.usedRandomDeck.add(selection);
 			activePlayer.hand.remove(selection);
 			selection.execute(this);
 		}
@@ -158,6 +163,40 @@ public class Game implements InitializeGame{
 				if(activePlayer.wallet[k] > 5 + storeHouse){
 					bank[k] = bank[k] + activePlayer.wallet[k] - (5 + storeHouse);
 					activePlayer.wallet[k] = (5 + storeHouse);
+				}
+			}
+			activePlayer = activePlayer.next;
+		}
+	}
+	
+	/**
+	 * Manages the discard phase of the game, where all random cards
+	 * are discarded to the usedRandomCard decks and the players choose
+	 * which permanent cards to discard
+	 */
+	public void discard(){
+		int numberOfPlayers = 3;
+		UserInterface<Card> cardMenus = new UserInterface<Card>();
+		Card discard = activePlayer.hand.get(0);
+		for(int i = 0; i < numberOfPlayers; i++){
+			for(int j = 0; j < activePlayer.hand.size(); j++){
+				while((activePlayer.hand.size() > 0) &&
+						activePlayer.hand.get(j).permanent == false){
+					activePlayer.usedRandomDeck.add(
+							activePlayer.hand.get(j));
+					activePlayer.hand.remove(j);
+				}
+			}
+			for(int j = 0; j < activePlayer.hand.size(); j++){
+				cardMenus.provideMenuOptions("Select a Permanent card to discard: ", 
+						this, activePlayer.hand, "Keep remaining cards.");
+				discard = cardMenus.getPlayerSelection(this, activePlayer.hand, true);
+				if(discard == null){
+					j = activePlayer.hand.size();
+				}
+				else{
+					activePlayer.usedRandomDeck.add(discard);
+					activePlayer.hand.remove(discard);
 				}
 			}
 			activePlayer = activePlayer.next;
@@ -215,19 +254,18 @@ public class Game implements InitializeGame{
 	 * Executes the turn sequences managed by the game
 	 */
 	public void run(){
-		boolean victory = false;
 		InitializeGame.initialize(this);
 		UserInterface<Game> ui = new UserInterface<Game>();
-		do{
+		while(!checkForVictory()){
 			drawCards();
 			ui.displayGamestate("Current Gamestate:", this);
-			actionCardPhase(victory);
+			actionCardPhase();
 			if(!checkForVictory()){
 				handleSpoilage();
 				ui.displayGamestate("Current Gamestate:", this);
+				discard();
 			}
 		}
-		while(!checkForVictory());
 		System.out.println("The Winner is: " + (findWinner()).name);
 	}
 	
@@ -238,7 +276,6 @@ public class Game implements InitializeGame{
 	 */
 	public static void main(String [] args){
 		Game game = new Game();
-		InitializeGame.initialize(game);
 		game.run();	
 	}
 }
