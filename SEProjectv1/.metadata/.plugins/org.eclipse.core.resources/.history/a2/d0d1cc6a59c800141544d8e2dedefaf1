@@ -247,14 +247,13 @@ public interface InitializeGame{
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Horus(null, null, 
 						"Build up to " + 3 + " buildings", "Pay 1 favor to "
-						+ "destroy 1 building", 3, 1));
+						+ "destroy 3 building", 3, 1);
 			}
 			for(int j = 0; j < 4; j++){
 				game.activePlayer.randomDeck.add(new Horus(null, null, 
 						"Build up to " + 1 + " buildings", "Pay 1 favor to "
-						+ "destroy 1 building", 1, 1));
+						+ "destroy 1 building", 3, 1);
 			}
-			game.activePlayer = game.activePlayer.next;
 		}
 	}
 	

@@ -70,13 +70,22 @@ public abstract class Card {
 	 * 
 	 * @param game The game being updated 
 	 * @param selection The Building the Player selected
-	 * @param refund The total refund available to the Player
-	 * 
-	 * @return The amount of the discount used in the transaction
 	 */
 	public void addBuilding(Game game, Building selection){
 		game.activePlayer.buildingPool.remove(selection);
 		game.activePlayer.city.add(selection);
+	}
+	
+	/**
+	 * Takes a building selected by the activePlayer and is removed it to his/her
+	 * city, removes it from the building pool, and tracks the refund
+	 * 
+	 * @param player The Player being updated 
+	 * @param selection The Building the Player selected
+	 */
+	public void removeBuilding(Player player, Building selection){
+		player.buildingPool.add(selection);
+		player.city.remove(selection);
 	}
 	
 	@Override

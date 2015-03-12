@@ -19,7 +19,7 @@ public class Game implements InitializeGame{
 	 * The default constructor for a game 
 	 */
 	Game() {
-		player1 = new Player("Player1", false);
+		player1 = new Player("Player1", true);
 		player2 = new Player("Player2", false);
 		player3 = new Player("Player3", false);
 		productionPool  = new ArrayList<ProductionTile>(); 

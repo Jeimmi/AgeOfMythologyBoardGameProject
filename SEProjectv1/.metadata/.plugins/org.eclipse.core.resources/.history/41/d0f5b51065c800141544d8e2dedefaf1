@@ -88,17 +88,19 @@ public class BuildCard extends Card {
 			}
 		}
 		for(int i = 0; i < player.buildingPool.size(); i++){
-			Building temp = player.buildingPool.get(i);
-			int[] copyCost = new int[4];
-			for(int j = 0; j < 4; j++){
-				copyCost[j] = temp.cost[j];
-			}
-			if(!(houseChecked)){
-				if(temp.type == Building.Type.HOUSE){
-					houseChecked = true;
+			if(player.buildingPool.size() >0){
+				Building temp = player.buildingPool.get(i);
+				int[] copyCost = new int[4];
+				for(int j = 0; j < 4; j++){
+					copyCost[j] = temp.cost[j];
 				}
-				if(canAffordWithDiscount(player.wallet, copyCost, copyDiscount, 0)){
-					affordable.add(temp);
+				if(!(houseChecked)){
+					if(temp.type == Building.Type.HOUSE){
+						houseChecked = true;
+					}
+					if(canAffordWithDiscount(player.wallet, copyCost, copyDiscount, 0)){
+						affordable.add(temp);
+					}
 				}
 			}
 		}
