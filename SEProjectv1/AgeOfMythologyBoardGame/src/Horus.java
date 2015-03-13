@@ -1,6 +1,12 @@
+/**
+ * @author Lyndon Kondratczyk
+ * @version 3/12/15
+ * 
+ * The god card Horus, which is a Build Card with the added feature of allowing
+ * an activePlayer to destroy one of any Player's building
+ */
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-
 
 public class Horus extends  BuildCard{
 	/**
@@ -8,8 +14,6 @@ public class Horus extends  BuildCard{
      * 
      * @param front The Card's front image
      * @param back The Card's back image
-     * @param permanent True if Card is permanent
-     * @param name The Card name
      * @param firstDescription The main Card description
      * @param secondDescription The secondary Card description
      * @param value The max number of builds
@@ -18,7 +22,7 @@ public class Horus extends  BuildCard{
 		public Horus(BufferedImage front, BufferedImage back, 
 				String firstDescription, String secondDescription, 
 				int value, int cost){
-		super(front, back, false, firstDescription,	
+		super(front, back, false, "Horus", firstDescription,	
 				secondDescription, value,cost);
 	}
 	
@@ -59,10 +63,16 @@ public class Horus extends  BuildCard{
 					System.out.println("The gods have answered your prayers.");			
 				}
 				else{
-					handleTargetCity.provideMenuOptions("Which of " + playerDestroy.name + "'s cites"
-							+ "shall suffer my wrath?", game, playerDestroy.city, "");
-					cityDestroy = handleTargetCity.getPlayerSelection(game, playerDestroy.city, false);
-					removeBuilding(playerDestroy, cityDestroy);
+					handleTargetCity.provideMenuOptions("Which of " + 
+							playerDestroy.name + "'s cites"	+ 
+							" shall suffer my wrath?", game, playerDestroy.city,
+							"Demand mercy for your tribute");
+					cityDestroy = handleTargetCity.getPlayerSelection(game, playerDestroy.city, true);
+					playerDestroy.buildingPool.add(cityDestroy);
+					playerDestroy.city.remove(cityDestroy);
+					if(cityDestroy == null){
+						System.out.println("The gods have answered your prayers.");	
+					}
 				}
 			}
 		}

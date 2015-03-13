@@ -61,8 +61,10 @@ public class UserInterface <T>{
 				selection = input.nextInt();
 			}
 			if(selection == options.size()){
+				//input.close();
 				return null;
 			}
+			//input.close();
 			return options.get(selection);
 		}
 		else if(options.size() > 0){
@@ -130,11 +132,11 @@ public class UserInterface <T>{
 			game.displayFunds("Wallet: ", playerPointer.wallet);
 			terrainAvailable.displayList("Available Terrain: ", playerPointer.terrainAvailable);
 			hand.displayList("Hand: ", playerPointer.hand);
-			System.out.println("Number of cards in rand deck :::: " + playerPointer.randomDeck.size());
-			System.out.println("Number of cards in used rand deck :::: " + playerPointer.usedRandomDeck.size());
-			productionArea.displayList("Prodcution Area: ", playerPointer.production);
+			//System.out.println("Number of cards in rand deck :::: " + playerPointer.randomDeck.size());
+			//System.out.println("Number of cards in used rand deck :::: " + playerPointer.usedRandomDeck.size());
+			productionArea.displayList("Production Area: ", playerPointer.production);
 			cityArea.displayList("City Area: ", playerPointer.city);
-			cityArea.displayList("Available to build: ", playerPointer.buildingPool);
+			//cityArea.displayList("Available to build: ", playerPointer.buildingPool);
 			
 			playerPointer = playerPointer.next;
 		}		

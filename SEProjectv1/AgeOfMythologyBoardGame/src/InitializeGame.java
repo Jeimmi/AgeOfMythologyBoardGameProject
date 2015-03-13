@@ -4,7 +4,7 @@
  * 
  * Creates/executes the starting conditions/tasks of the AoM board game
  */
-import java.awt.image.BufferedImage;
+
 import java.util.*;
 public interface InitializeGame{
 	
@@ -160,90 +160,101 @@ public interface InitializeGame{
 		for(int i = 0; i < numberOfPlayers; i ++){
 			
 			/*----BUILDERS PACK----*/
-	/*		switch(game.activePlayer.playerRace){
+			/*
+			switch(game.activePlayer.playerRace){
 			case NORSE:
 				game.activePlayer.permanentDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 1 + " building",
+						(null, null, true, "Build", "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.permanentDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 1 + " building",
+						(null, null, true, "Build", "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 4 + " buildings",
+						(null, null, false, "Build", "Build up to " + 4 + " buildings",
 								"", 4, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer = game.activePlayer.next;
 				break;
 			case GREEK:
 				game.activePlayer.permanentDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 1 + " building",
+						(null, null, true, "Build", "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.permanentDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 1 + " building",
+						(null, null, true, "Build", "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 4 + " buildings",
+						(null, null, false, "Build", "Build up to " + 4 + " buildings",
 								"", 4, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
+				game.activePlayer.randomDeck.add(new Hera(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 1 favor to "
+								+ "gain 1 house.", 3, 2));
 				game.activePlayer = game.activePlayer.next;
 				break;
 			case EGYPTIAN:
 				game.activePlayer.permanentDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 1 + " building",
+						(null, null, true, "Build", "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.permanentDeck.add(new BuildCard
-						(null, null, true, "Build up to " + 1 + " building",
+						(null, null, true, "Build", "Build up to " + 1 + " building",
 								"", 1, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 4 + " buildings",
+						(null, null, false, "Build", "Build up to " + 4 + " buildings",
 								"", 4, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 3 + " buildings",
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
 								"", 3, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer.randomDeck.add(new BuildCard
-						(null, null, false, "Build up to " + 2 + " buildings",
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer = game.activePlayer.next;
+				game.activePlayer.randomDeck.add(new Horus(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 1 favor to "
+						+ "destroy 1 building", 3, 1));
+				game.activePlayer.randomDeck.add(new Nephthys(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 2 favor to "
+								+ "reduce building costs by 2 resources.", 3, 2));
 				break;
 			default:
 				break;
-			}*/
+			}
+			*/
+			/*----TESTER PACK HORUS----*/
 			
-			/*----TESTER PACK----*/
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Horus(null, null, 
 						"Build up to " + 3 + " buildings", "Pay 1 favor to "
@@ -254,6 +265,36 @@ public interface InitializeGame{
 						"Build up to " + 1 + " buildings", "Pay 1 favor to "
 						+ "destroy 1 building", 1, 1));
 			}
+			
+			
+			/*----TESTER PACK NEPHTHYS----*/
+		
+			for(int j = 0; j < 6; j++){
+				game.activePlayer.randomDeck.add(new Nephthys(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 2 favor to "
+								+ "reduce building costs by 2 resources.", 3, 2));
+			}
+			for(int j = 0; j < 4; j++){
+				game.activePlayer.randomDeck.add(new Nephthys(null, null, 
+						"Build up to " + 1 + " buildings", "Pay 2 favor to "
+								+ "reduce building costs by 2 resources.", 1, 2));
+			}
+			
+			/*----TESTER PACK HERA----*/
+			
+			for(int j = 0; j < 6; j++){
+				game.activePlayer.randomDeck.add(new Hera(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 1 favor to "
+								+ "gain 1 house.", 3, 2));
+			}
+			for(int j = 0; j < 4; j++){
+				game.activePlayer.randomDeck.add(new Hera(null, null, 
+						"Build up to " + 1 + " buildings", "Pay 1 favor to "
+								+ "gain 1 house.", 1, 2));
+			}
+
+			
+			
 			game.activePlayer = game.activePlayer.next;
 		}
 	}

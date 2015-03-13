@@ -22,9 +22,9 @@ public class BuildCard extends Card {
      * @param cost The cost to play the Card
      */
 	public BuildCard(BufferedImage front, BufferedImage back,
-			boolean permanent, String firstDescription,
+			boolean permanent, String name, String firstDescription,
 			String secondDescription, int value, int cost) {
-		super(front, back, permanent, "Build", firstDescription,
+		super(front, back, permanent, name, firstDescription,
 				secondDescription, value, cost);
 	}
 	
@@ -79,7 +79,6 @@ public class BuildCard extends Card {
 	 */
 	public ArrayList<Building> populateAffordable(Player player, int discount){
 		ArrayList<Building> affordable = new ArrayList<Building>();
-		int copyDiscount = 0 + discount;
 		boolean houseChecked = false;
 		
 		for(int i = 0; i < player.city.size(); i++){
@@ -90,17 +89,21 @@ public class BuildCard extends Card {
 		for(int i = 0; i < player.buildingPool.size(); i++){
 			Building temp = player.buildingPool.get(i);
 			int[] copyCost = new int[4];
-			for(int j = 0; j < 4; j++){
-				copyCost[j] = temp.cost[j];
-			}
-			if(!(houseChecked)){
-				if(temp.type == Building.Type.HOUSE){
-					houseChecked = true;
+			if(temp != null){
+				for(int j = 0; j < 4; j++){
+					copyCost[j] = temp.cost[j];
 				}
-				if(canAffordWithDiscount(player.wallet, copyCost, copyDiscount, 0)){
+				if(temp.type == Building.Type.HOUSE){
+					if(!(houseChecked)){
+						houseChecked = true;
+						affordable.add(temp);
+					}
+				}
+				else{
 					affordable.add(temp);
 				}
 			}
+			
 		}
 		return affordable;
 	}
@@ -211,6 +214,5 @@ public class BuildCard extends Card {
 				}
 			}
 		}
-		// TODO Auto-generated method stub
 	}
 }

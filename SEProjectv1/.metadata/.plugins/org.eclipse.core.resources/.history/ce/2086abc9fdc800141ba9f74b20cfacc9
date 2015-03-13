@@ -1,0 +1,14 @@
+import java.awt.image.BufferedImage;
+
+
+public class Nephthys extends BuildCard{
+	public Nephthys(BufferedImage front, BufferedImage back, 
+			String firstDescription, String secondDescription, 
+			int value, int cost){
+	super(front, back, false, "Nephthys", firstDescription,	
+			secondDescription, value,cost);
+	}
+	public void execute(Game game){
+
+	}
+}
