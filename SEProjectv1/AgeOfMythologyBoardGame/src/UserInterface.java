@@ -20,7 +20,7 @@ public class UserInterface <T>{
 	 */
 	public void provideMenuOptions(String prompt, Game game, ArrayList<T> options, String passOption){
 		if(game.activePlayer.human){
-			displayGamestate("Current gamestate...", game);
+			displayGamestate("CURRENT GAMESTATE...", game);
 			System.out.println("\n\n" + game.activePlayer.name + " : " + prompt);
 			for(int i = 0; i < options.size(); i++){
 				System.out.println("(" + i + ")" + options.get(i).toString());
@@ -111,7 +111,7 @@ public class UserInterface <T>{
 		UserInterface<ProductionTile> productionArea = new UserInterface<ProductionTile>();
 		UserInterface<Building> cityArea = new UserInterface<Building>();
 	 
-		
+		System.out.println();
 		System.out.println(title);
 		game.displayFunds("Bank: ", game.bank);
 		for(int i = 0; i < 3; i++){
@@ -126,19 +126,21 @@ public class UserInterface <T>{
 				System.out.println("Player - " + playerPointer.name);
 				break;
 			}
-			
 			System.out.println((playerPointer.human)?"(Human)":"(AI)");
 			System.out.println(playerPointer.playerRace);
+			System.out.println(playerPointer.playerAge);
 			game.displayFunds("Wallet: ", playerPointer.wallet);
 			terrainAvailable.displayList("Available Terrain: ", playerPointer.terrainAvailable);
 			hand.displayList("Hand: ", playerPointer.hand);
-			//System.out.println("Number of cards in rand deck :::: " + playerPointer.randomDeck.size());
-			//System.out.println("Number of cards in used rand deck :::: " + playerPointer.usedRandomDeck.size());
+			System.out.println("Number of cards in rand deck :::: " + playerPointer.randomDeck.size());
+			System.out.println("Number of cards in used rand deck :::: " + playerPointer.usedRandomDeck.size());
 			productionArea.displayList("Production Area: ", playerPointer.production);
 			cityArea.displayList("City Area: ", playerPointer.city);
-			//cityArea.displayList("Available to build: ", playerPointer.buildingPool);
+			cityArea.displayList("Available to build: ", playerPointer.buildingPool);
 			
 			playerPointer = playerPointer.next;
+			
+			System.out.println();
 		}		
 	}
 }

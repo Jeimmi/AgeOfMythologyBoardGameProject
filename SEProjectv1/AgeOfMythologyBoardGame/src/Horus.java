@@ -23,7 +23,7 @@ public class Horus extends  BuildCard{
 				String firstDescription, String secondDescription, 
 				int value, int cost){
 		super(front, back, false, "Horus", firstDescription,	
-				secondDescription, value,cost);
+				secondDescription, value, cost);
 	}
 	
 	@Override

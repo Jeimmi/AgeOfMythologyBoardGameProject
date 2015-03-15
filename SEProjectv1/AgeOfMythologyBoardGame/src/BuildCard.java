@@ -1,5 +1,5 @@
 /**
- * @author Lyndon Kondratczyk
+s * @author Lyndon Kondratczyk
  * @version 3/9/15
  * 
  * The template for an AoM Build Card attributes
@@ -93,14 +93,19 @@ public class BuildCard extends Card {
 				for(int j = 0; j < 4; j++){
 					copyCost[j] = temp.cost[j];
 				}
+				
 				if(temp.type == Building.Type.HOUSE){
 					if(!(houseChecked)){
 						houseChecked = true;
-						affordable.add(temp);
+						if(canAffordWithDiscount(player.wallet, 
+								temp.cost, discount, 0))
+								affordable.add(temp);
 					}
 				}
 				else{
-					affordable.add(temp);
+					if(canAffordWithDiscount(player.wallet, 
+							temp.cost, discount, 0))
+						affordable.add(temp);
 				}
 			}
 			

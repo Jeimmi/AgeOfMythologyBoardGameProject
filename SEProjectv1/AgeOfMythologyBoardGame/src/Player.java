@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Player {
 	protected String name;
-	protected enum Age{ARCHAIC, CLASSICAL, HERIOC, MYTHIC}
+	protected enum Age{ARCHAIC, CLASSICAL, HEROIC, MYTHIC}
 	protected Age playerAge;
 	protected enum Race{EGYPTIAN, GREEK, NORSE}
 	protected Race playerRace;

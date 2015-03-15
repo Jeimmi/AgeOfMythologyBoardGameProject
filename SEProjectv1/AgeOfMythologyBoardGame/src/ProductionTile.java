@@ -12,6 +12,7 @@ public class ProductionTile {
 	Terrain type;
 	protected int[] resource;
 	protected int quantity;
+	boolean hasVillager;
 
 	/**
 	 * The constructor for a ProductionTile
@@ -32,6 +33,7 @@ public class ProductionTile {
 		resource[2] = gold;
 		resource[3] = favor;
 		this.quantity = quantity;
+		hasVillager = false;
 	}
 	
 	/**
@@ -40,6 +42,7 @@ public class ProductionTile {
 	@Override
 	public String toString(){
 		String resources = "";
+		String villager = "";
 		for(int i = 0; i < resource.length; i ++){
 			if(resource[i] > 0){
 				resources = resources + resource[i];
@@ -60,6 +63,8 @@ public class ProductionTile {
 				}
 			}
 		}
-		return ("" + type + " : " + resources);
+		if(this.hasVillager == true)
+			villager = "(villager)";
+		return ("" + type + " " + villager + " : " + resources);
 	}
 }

@@ -19,7 +19,7 @@ public class Game implements InitializeGame{
 	 * The default constructor for a game 
 	 */
 	Game() {
-		player1 = new Player("Player1", true);
+		player1 = new Player("Player1", false);
 		player2 = new Player("Player2", false);
 		player3 = new Player("Player3", false);
 		productionPool  = new ArrayList<ProductionTile>(); 
@@ -77,7 +77,7 @@ public class Game implements InitializeGame{
 			case CLASSICAL:
 				handSize = 5;
 				break;
-			case HERIOC:
+			case HEROIC:
 				handSize = 6;
 				break;
 			case MYTHIC:
@@ -180,7 +180,7 @@ public class Game implements InitializeGame{
 		Card discard = activePlayer.hand.get(0);
 		for(int i = 0; i < numberOfPlayers; i++){
 			for(int j = 0; j < activePlayer.hand.size(); j++){
-				while((activePlayer.hand.size() > 0) &&
+				while((activePlayer.hand.size() > j) &&
 						activePlayer.hand.get(j).permanent == false){
 					activePlayer.usedRandomDeck.add(
 							activePlayer.hand.get(j));
@@ -195,8 +195,9 @@ public class Game implements InitializeGame{
 					j = activePlayer.hand.size();
 				}
 				else{
-					activePlayer.usedRandomDeck.add(discard);
+					activePlayer.permanentDeck.add(discard);
 					activePlayer.hand.remove(discard);
+					j--;
 				}
 			}
 			activePlayer = activePlayer.next;
@@ -258,11 +259,11 @@ public class Game implements InitializeGame{
 		UserInterface<Game> ui = new UserInterface<Game>();
 		while(!checkForVictory()){
 			drawCards();
-			ui.displayGamestate("Current Gamestate:", this);
+			ui.displayGamestate("CURRENT GAMESTATE:", this);
 			actionCardPhase();
 			if(!checkForVictory()){
 				handleSpoilage();
-				ui.displayGamestate("Current Gamestate:", this);
+				ui.displayGamestate("CURRENT GAMESTATE:", this);
 				discard();
 			}
 		}

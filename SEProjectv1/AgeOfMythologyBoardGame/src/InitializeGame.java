@@ -5,6 +5,7 @@
  * Creates/executes the starting conditions/tasks of the AoM board game
  */
 
+import java.awt.image.BufferedImage;
 import java.util.*;
 public interface InitializeGame{
 	
@@ -70,11 +71,11 @@ public interface InitializeGame{
 		for(int i = 0; i < 4; i++ ){
 			game.bank[i] = 25;
 			for(int j = 0; j < numberOfPlayers; j++){
-				game.activePlayer.wallet[i] = 100;
+				game.activePlayer.wallet[i] = 4;
 				game.activePlayer = game.activePlayer.next;
 			}
 		}
-		game.bank[4] = 25;
+		game.bank[4] = 30;
 		int turnOrder = (int)(Math.random()*3);
 		for(int i = turnOrder; i > 0; i--){
 			game.activePlayer = game.activePlayer.next.next;
@@ -95,8 +96,6 @@ public interface InitializeGame{
 			game.activePlayer.buildingPool.add(new Building(Building.Type.GRANARY, 0,2,3,0));
 			game.activePlayer.buildingPool.add(new Building(Building.Type.WOOD_WORKSHOP, 2,0,3,0));
 			game.activePlayer.buildingPool.add(new Building(Building.Type.GOLD_MINT, 3,2,0,0));
-			game.activePlayer.buildingPool.add(new Building(Building.Type.GREAT_TEMPLE, 4,4,4,4));
-			//game.activePlayer.buildingPool.add(new Building(Building.Type.THE_WONDER, 10,10,10,10));
 			
 			for(int j = 0; j < 10; j++){
 				game.activePlayer.buildingPool.add(new Building(Building.Type.HOUSE, 2,2,0,0));
@@ -131,6 +130,7 @@ public interface InitializeGame{
 
 		tempList.add(new ProductionTile(ProductionTile.Terrain.DESERT, 0, 0, 1,	0, 7));
 		tempList.add(new ProductionTile(ProductionTile.Terrain.DESERT, 0, 0, 0,	2, 7));
+		
 		tempList.add(new ProductionTile(ProductionTile.Terrain.FERTILE, 0, 0, 0, 1, 3));
 		tempList.add(new ProductionTile(ProductionTile.Terrain.FERTILE, 0, 0, 1, 0, 3));
 		tempList.add(new ProductionTile(ProductionTile.Terrain.FERTILE, 2, 0, 0, 0, 12));
@@ -158,6 +158,251 @@ public interface InitializeGame{
 		int numberOfPlayers = 3;
 	
 		for(int i = 0; i < numberOfPlayers; i ++){
+			
+			/*----BASE PACK----*/
+		switch(game.activePlayer.playerRace){
+			case NORSE:
+				game.activePlayer.permanentDeck.add(new BuildCard
+						(null, null, true, "Build", "Build up to " + 1 + " building",
+								"", 1, 0));
+				game.activePlayer.permanentDeck.add(new BuildCard
+						(null, null, true, "Build", "Build up to " + 1 + " building",
+								"", 1, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 4 + " buildings",
+								"", 4, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
+								"", 2, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
+								"", 2, 0));
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+		
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age ", "Advance to the next age - " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));	
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+							
+				game.activePlayer = game.activePlayer.next;
+				break;
+				
+			case GREEK:
+			
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.permanentDeck.add(new BuildCard
+						(null, null, true, "Build", "Build up to " + 1 + " building",
+								"", 1, 0));
+				game.activePlayer.permanentDeck.add(new BuildCard
+						(null, null, true, "Build", "Build up to " + 1 + " building",
+								"", 1, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 4 + " buildings",
+								"", 4, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
+								"", 2, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
+								"", 2, 0));
+				game.activePlayer.randomDeck.add(new Hera(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 1 favor to "
+								+ "gain 1 house.", 3, 2));
+
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));	
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+
+				game.activePlayer = game.activePlayer.next;
+				break;
+				
+			case EGYPTIAN:
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.permanentDeck.add(new BuildCard
+						(null, null, true, "Build", "Build up to " + 1 + " building",
+								"", 1, 0));
+				game.activePlayer.permanentDeck.add(new BuildCard
+						(null, null, true, "Build", "Build up to " + 1 + " building",
+								"", 1, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 4 + " buildings",
+								"", 4, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 3 + " buildings",
+								"", 3, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
+								"", 2, 0));
+				game.activePlayer.randomDeck.add(new BuildCard
+						(null, null, false, "Build", "Build up to " + 2 + " buildings",
+								"", 2, 0));
+				game.activePlayer.randomDeck.add(new Horus(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 1 favor to "
+						+ "destroy 1 building", 3, 1));
+				game.activePlayer.randomDeck.add(new Nephthys(null, null, 
+						"Build up to " + 3 + " buildings", "Pay 2 favor to "
+								+ "reduce building costs by 2 resources.", 3, 2));
+
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));	
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+								
+				game.activePlayer = game.activePlayer.next;
+				break;
+			default:
+				break;
+			}
 			
 			/*----BUILDERS PACK----*/
 			/*
@@ -254,7 +499,7 @@ public interface InitializeGame{
 			}
 			*/
 			/*----TESTER PACK HORUS----*/
-			
+			/*
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Horus(null, null, 
 						"Build up to " + 3 + " buildings", "Pay 1 favor to "
@@ -267,7 +512,7 @@ public interface InitializeGame{
 			}
 			
 			
-			/*----TESTER PACK NEPHTHYS----*/
+			----TESTER PACK NEPHTHYS----
 		
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Nephthys(null, null, 
@@ -280,7 +525,7 @@ public interface InitializeGame{
 								+ "reduce building costs by 2 resources.", 1, 2));
 			}
 			
-			/*----TESTER PACK HERA----*/
+			----TESTER PACK HERA----
 			
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Hera(null, null, 
@@ -292,10 +537,382 @@ public interface InitializeGame{
 						"Build up to " + 1 + " buildings", "Pay 1 favor to "
 								+ "gain 1 house.", 1, 2));
 			}
-
-			
+*/
+			/*----GATHER PACK----*/
+			/*switch(game.activePlayer.playerRace){
+			case NORSE:
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				
+				
+				game.activePlayer = game.activePlayer.next;
+				break;
+			case GREEK:
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				
+				game.activePlayer = game.activePlayer.next;
+				break;
+			case EGYPTIAN:
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
+						true, "Gather", "Resource type or terrain tpye. ", "", 
+						0, GatherCard.GatherType.RESOURCE, 
+						GatherCard.GatherType.TERRAIN));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer.randomDeck.add(new GatherCard(null, null,
+						false, "Gather", "All resources. ", "", 
+						0, GatherCard.GatherType.ALL_RESOURCES, null));
+				game.activePlayer = game.activePlayer.next;
+				break;
+			default:
+				break;
+			}
 			
 			game.activePlayer = game.activePlayer.next;
+		}*/
+		/*----BUILDERS PACK----*/
+		/*
+		switch(game.activePlayer.playerRace){
+		case NORSE:
+			game.activePlayer.permanentDeck.add(new BuildCard
+					(null, null, true, "Build", "Build up to " + 1 + " building",
+							"", 1, 0));
+			game.activePlayer.permanentDeck.add(new BuildCard
+					(null, null, true, "Build", "Build up to " + 1 + " building",
+							"", 1, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 4 + " buildings",
+							"", 4, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 2 + " buildings",
+							"", 2, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 2 + " buildings",
+							"", 2, 0));
+			game.activePlayer = game.activePlayer.next;
+			break;
+		case GREEK:
+			game.activePlayer.permanentDeck.add(new BuildCard
+					(null, null, true, "Build", "Build up to " + 1 + " building",
+							"", 1, 0));
+			game.activePlayer.permanentDeck.add(new BuildCard
+					(null, null, true, "Build", "Build up to " + 1 + " building",
+							"", 1, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 4 + " buildings",
+							"", 4, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 2 + " buildings",
+							"", 2, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 2 + " buildings",
+							"", 2, 0));
+			game.activePlayer.randomDeck.add(new Hera(null, null, 
+					"Build up to " + 3 + " buildings", "Pay 1 favor to "
+							+ "gain 1 house.", 3, 1));
+			game.activePlayer = game.activePlayer.next;
+			break;
+		case EGYPTIAN:
+			game.activePlayer.permanentDeck.add(new BuildCard
+					(null, null, true, "Build", "Build up to " + 1 + " building",
+							"", 1, 0));
+			game.activePlayer.permanentDeck.add(new BuildCard
+					(null, null, true, "Build", "Build up to " + 1 + " building",
+							"", 1, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 4 + " buildings",
+							"", 4, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 3 + " buildings",
+							"", 3, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 2 + " buildings",
+							"", 2, 0));
+			game.activePlayer.randomDeck.add(new BuildCard
+					(null, null, false, "Build", "Build up to " + 2 + " buildings",
+							"", 2, 0));
+			game.activePlayer = game.activePlayer.next;
+			game.activePlayer.randomDeck.add(new Horus(null, null, 
+					"Build up to " + 3 + " buildings", "Pay 1 favor to "
+					+ "destroy 1 building", 3, 1));
+			game.activePlayer.randomDeck.add(new Nephthys(null, null, 
+					"Build up to " + 3 + " buildings", "Pay 2 favor to "
+							+ "reduce building costs by 2 resources.", 3, 2));
+			break;
+		default:
+			break;
+		}
+					/*----NEXT AGE PACK----*/
+			/*
+			switch(game.activePlayer.playerRace){
+			case NORSE:
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age ", "Advance to the next age - " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",	"", 0, false));	
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",	"", 0, false));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				
+				game.activePlayer = game.activePlayer.next;
+				break;
+			case GREEK:
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));	
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				
+				game.activePlayer = game.activePlayer.next;
+				break;
+			case EGYPTIAN:
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));	
+				game.activePlayer.permanentDeck.add(new NextAge(null, null,
+						true, "Next Age", "Advance to the next age- " + 4 + 
+						" of each resource for Classical, " + 5 + 
+						" for Heroic, " + 6 + " for Mythical ",
+						"", 0, false));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+				game.activePlayer.randomDeck.add(new NextAge(null, null,
+						false, "Next Age", "Advance to the next age- " + 3 + 
+						" of each resource for Classical, " + 4 + 
+						" for Heroic, " + 5 + " for Mythical ",
+						"", 0, true));
+
+				game.activePlayer = game.activePlayer.next;
+				break;
+			default:
+				break;
+			}
+	*/		
 		}
 	}
 	
