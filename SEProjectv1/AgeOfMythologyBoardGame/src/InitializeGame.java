@@ -296,7 +296,7 @@ public interface InitializeGame{
 								"", 2, 0));
 				game.activePlayer.randomDeck.add(new Hera(null, null, 
 						"Build up to " + 3 + " buildings", "Pay 1 favor to "
-								+ "gain 1 house.", 3, 2));
+								+ "gain 1 house.", 3, 1));
 
 				game.activePlayer.permanentDeck.add(new NextAge(null, null,
 						true, "Next Age", "Advance to the next age- " + 4 + 
@@ -403,7 +403,8 @@ public interface InitializeGame{
 			default:
 				break;
 			}
-			
+		}
+	}
 			/*----BUILDERS PACK----*/
 			/*
 			switch(game.activePlayer.playerRace){
@@ -459,9 +460,6 @@ public interface InitializeGame{
 				game.activePlayer.randomDeck.add(new BuildCard
 						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
-				game.activePlayer.randomDeck.add(new Hera(null, null, 
-						"Build up to " + 3 + " buildings", "Pay 1 favor to "
-								+ "gain 1 house.", 3, 2));
 				game.activePlayer = game.activePlayer.next;
 				break;
 			case EGYPTIAN:
@@ -487,18 +485,12 @@ public interface InitializeGame{
 						(null, null, false, "Build", "Build up to " + 2 + " buildings",
 								"", 2, 0));
 				game.activePlayer = game.activePlayer.next;
-				game.activePlayer.randomDeck.add(new Horus(null, null, 
-						"Build up to " + 3 + " buildings", "Pay 1 favor to "
-						+ "destroy 1 building", 3, 1));
-				game.activePlayer.randomDeck.add(new Nephthys(null, null, 
-						"Build up to " + 3 + " buildings", "Pay 2 favor to "
-								+ "reduce building costs by 2 resources.", 3, 2));
 				break;
 			default:
 				break;
 			}
 			*/
-			/*----TESTER PACK HORUS----*/
+			/*----TESTER PACK HORUS----*////////////////////////////////////////////////////
 			/*
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Horus(null, null, 
@@ -510,10 +502,10 @@ public interface InitializeGame{
 						"Build up to " + 1 + " buildings", "Pay 1 favor to "
 						+ "destroy 1 building", 1, 1));
 			}
+			*/
 			
-			
-			----TESTER PACK NEPHTHYS----
-		
+			/*----TESTER PACK NEPHTHYS----*/
+		/*
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Nephthys(null, null, 
 						"Build up to " + 3 + " buildings", "Pay 2 favor to "
@@ -524,22 +516,23 @@ public interface InitializeGame{
 						"Build up to " + 1 + " buildings", "Pay 2 favor to "
 								+ "reduce building costs by 2 resources.", 1, 2));
 			}
-			
-			----TESTER PACK HERA----
-			
+			/*
+			/*----TESTER PACK HERA----*/
+			/*
 			for(int j = 0; j < 6; j++){
 				game.activePlayer.randomDeck.add(new Hera(null, null, 
 						"Build up to " + 3 + " buildings", "Pay 1 favor to "
-								+ "gain 1 house.", 3, 2));
+								+ "gain 1 house.", 3, 1));
 			}
 			for(int j = 0; j < 4; j++){
 				game.activePlayer.randomDeck.add(new Hera(null, null, 
 						"Build up to " + 1 + " buildings", "Pay 1 favor to "
-								+ "gain 1 house.", 1, 2));
+								+ "gain 1 house.", 1, 1));
 			}
-*/
+			/*
 			/*----GATHER PACK----*/
-			/*switch(game.activePlayer.playerRace){
+			/*
+			switch(game.activePlayer.playerRace){
 			case NORSE:
 				game.activePlayer.permanentDeck.add(new GatherCard(null, null,
 						true, "Gather", "Resource type or terrain tpye. ", "", 
@@ -628,8 +621,8 @@ public interface InitializeGame{
 				break;
 			}
 			
-			game.activePlayer = game.activePlayer.next;
-		}*/
+		}}
+		*/
 		/*----BUILDERS PACK----*/
 		/*
 		switch(game.activePlayer.playerRace){
@@ -912,7 +905,7 @@ public interface InitializeGame{
 			default:
 				break;
 			}
-	*/		
+			
 		}
 	}
 	

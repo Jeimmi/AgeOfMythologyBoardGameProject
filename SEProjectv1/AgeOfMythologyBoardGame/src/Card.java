@@ -58,8 +58,11 @@ public abstract class Card {
 	 * @param toSub Source to subtract from destination
 	 * @param subbedFrom Destination to be subtracted from adn updated
 	 */
-	public void subtractResources(int[] toSub, int[] subbedFrom){
+	public void subtractResources(int[] toSub, int[] subbedFrom)
+			throws IllegalArgumentException{
 		for(int i = 0; ((i < toSub.length) && (i < subbedFrom.length)); i++){
+			if(subbedFrom[i] < toSub[i])
+				throw new IllegalArgumentException();
 			subbedFrom[i] = subbedFrom[i] - toSub[i];
 		}
 	}
@@ -87,7 +90,10 @@ public abstract class Card {
 		player.buildingPool.add(selection);
 		player.city.remove(selection);
 	}
-	
+	/**
+	 * A String describing the Card
+	 * 
+	 */
 	@Override
 	public String toString(){
 		if(this.secondDescription.equals("")){
@@ -99,5 +105,10 @@ public abstract class Card {
 		}
 	}
 
+	/**
+	 * The Card's effect on the Game
+	 * 
+	 * @param game The game being affected by the card
+	 */
 	public abstract void execute(Game game);
 }

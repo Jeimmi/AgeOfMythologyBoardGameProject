@@ -13,6 +13,16 @@ import java.util.ArrayList;
 
 public class Nephthys extends BuildCard{
 	
+	/**
+	 * The constructor for the god card Nephthys
+	 * 
+     * @param front The Card's front image
+     * @param back The Card's back image
+     * @param firstDescription The main Card description
+     * @param secondDescription The secondary Card description
+     * @param value The max number of builds
+     * @param cost The cost to play the Card
+	 */
 	public Nephthys(BufferedImage front, BufferedImage back, 
 			String firstDescription, String secondDescription, 
 			int value, int cost){
@@ -20,11 +30,14 @@ public class Nephthys extends BuildCard{
 			secondDescription, value,cost);
 	}
 	
+	/**
+	 * Overrides execute in Building card to allow special god ability
+	 */
 	public void execute(Game game){
 		ArrayList<String> tollMessage = new ArrayList<String>();
 		UserInterface<String> handleToll = new UserInterface<String>();
 		
-		tollMessage.add("Pay one favor to prove you are worthy.");
+		tollMessage.add("Pay" + cost + "favor to prove you are worthy.");
 		handleToll.provideMenuOptions("Pay tribute to your god?", game, 
 				tollMessage, "Run away in fear...");
 		if(handleToll.getPlayerSelection(game, tollMessage, true) != null){
@@ -33,6 +46,7 @@ public class Nephthys extends BuildCard{
 			}
 			else{
 				game.activePlayer.wallet[3] -= 2;
+				game.bank[3] += 2;
 				System.out.println("The gods have answered your prayers.");	
 			}
 		}
@@ -82,18 +96,22 @@ public class Nephthys extends BuildCard{
 						case("food"):
 							System.out.println();
 							game.activePlayer.wallet[0] += 1;
+							game.bank[0] -= 1;
 							refundAvailable[0] -= 1;
 							break;
 						case("wood"):
 							game.activePlayer.wallet[1] += 1;
+							game.bank[1] -= 1;
 							refundAvailable[1] -= 1;
 							break;
 						case("gold"):
 							game.activePlayer.wallet[2] += 1;
+							game.bank[2] -= 1;
 							refundAvailable[2] -= 1;
 							break;
 						case("favor"):
 							game.activePlayer.wallet[3] += 1;
+							game.bank[3] -= 1;
 							refundAvailable[3] -= 1;
 							break;
 						default:

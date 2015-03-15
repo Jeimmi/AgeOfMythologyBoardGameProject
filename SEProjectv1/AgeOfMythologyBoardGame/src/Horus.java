@@ -10,15 +10,15 @@ import java.util.ArrayList;
 
 public class Horus extends  BuildCard{
 	/**
-     * The constructor for creating a Build Card with image
-     * 
+	 * The constructor for the god card Horus
+	 * 
      * @param front The Card's front image
      * @param back The Card's back image
      * @param firstDescription The main Card description
      * @param secondDescription The secondary Card description
      * @param value The max number of builds
      * @param cost The cost to play the Card
-     */
+	 */
 		public Horus(BufferedImage front, BufferedImage back, 
 				String firstDescription, String secondDescription, 
 				int value, int cost){
@@ -26,7 +26,9 @@ public class Horus extends  BuildCard{
 				secondDescription, value, cost);
 	}
 	
-	@Override
+	/**
+	 * Overrides execute in Building card to allow special god ability
+	 */
 	public void execute(Game game){
 		int numberOfPlayers = 3;
 		Player playerDestroy;
@@ -54,6 +56,7 @@ public class Horus extends  BuildCard{
 					game.activePlayer = game.activePlayer.next;	
 				}
 				game.activePlayer.wallet[3] -= 1;
+				game.bank[3] += 1;
 				displayTargetNames.provideMenuOptions(
 						"Select the victim of a cataclysm.", game, targetNames, 
 						"Demand mercy for your tribute");

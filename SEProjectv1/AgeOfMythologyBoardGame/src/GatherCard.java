@@ -30,23 +30,37 @@ public class GatherCard extends Card{
 			this.gatherBy.add(gatherBy2);
 	}
 	
-	public void gatherByResource(Game game, int resource){
-		if(game.bank[resource]  > 0){
-			for(int i = 0; i < game.activePlayer.production.size(); i++){
-				if(game.activePlayer.production.get(i).resource[resource] > 0){
-					game.activePlayer.wallet[resource] += 1;
-					game.bank[resource] -= 1;
-					if(game.bank[resource]  > 0){
-						if(game.activePlayer.production.get(i).hasVillager){
-							game.activePlayer.wallet[resource] += 1;
-							game.bank[resource] -= 1;
+	/**
+	 * Controls the sequence of events resulting from a Player choosing to
+	 * to gather by resource.
+	 * 
+	 * @param game The game being altered
+	 * @param resourceIndex The index of the resource being gathered by.
+	 */
+	public void gatherByResource(Game game, int resourceIndex){
+		for(int i = 0; i < game.activePlayer.production.size(); i++){
+			if((game.activePlayer.production.get(i)).resource[resourceIndex] > 0){
+				if(game.bank[resourceIndex]  > 0){
+					game.activePlayer.wallet[resourceIndex] += 1;
+					game.bank[resourceIndex] -= 1;
+					if(game.bank[resourceIndex]  > 0){
+						if((game.activePlayer.production.get(i)).hasVillager){
+							game.activePlayer.wallet[resourceIndex] += 1;
+							game.bank[resourceIndex] -= 1;
 						}
 					}
 				}
 			}
 		}
 	}
-	
+
+	/**
+	 * Controls the sequence of events resulting from a Player choosing to
+	 * to gather by terrain.
+	 *  
+	 * @param game The game being altered
+	 * @param terrainType The terrain type being gathered by
+	 */
 	public void gatherByTerrain(Game game, ProductionTile.Terrain terrainType){
 		for(int i = 0; i < game.activePlayer.production.size(); i++){
 			if(game.activePlayer.production.get(i).type == terrainType){
@@ -62,25 +76,34 @@ public class GatherCard extends Card{
 								game.activePlayer.production.get(i).resource[j];
 					}
 				}
-				addResources(game.activePlayer.production.get(i).resource, 
-						game.activePlayer.wallet);
-				subtractResources(game.activePlayer.production.get(i).resource,
-						game.bank);
 				if(game.activePlayer.production.get(i).hasVillager){
 					for(int j = 0; j < 4; j++){
-						if(game.activePlayer.production.get(i).resource[j] > 0)
-							game.activePlayer.wallet[j] += i;
+						if(game.bank[j] > 0)
+						if(game.activePlayer.production.get(i).resource[j] > 0){
+							game.activePlayer.wallet[j] += 1;
 							game.bank[j] -= 1;
+						}
 					}
 				}
 			}
 		}
 	}
 	
+	/**
+	 * Controls the sequence of events resulting from a Player cho0sing to
+	 * to gather by food.
+	 * 
+	 * @param game The game being altered
+	 */
 	public void gatherByFood(Game game){
 		gatherByResource(game, 0);
 	}
 	
+	/**
+	 * Executes the Card's effect on the Game
+	 * 
+	 * @param game The game being affected by the card
+	 */
 	public void execute(Game game){
 		int numberOfPlayers = 3;
 		int numberOfVillagers = 0;

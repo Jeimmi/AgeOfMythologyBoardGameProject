@@ -129,8 +129,8 @@ public class BuildCard extends Card {
 				int temp = selection.cost[i] - game.activePlayer.wallet[i];
 				discountUsed = discountUsed + temp;
 				game.activePlayer.wallet[i] = 0;
-				game.bank[i] = game.bank[i] + selection.cost[i] - discountUsed;
-				refundOptions[i] = refundOptions[i] + selection.cost[i] - discountUsed;
+				game.bank[i] = game.bank[i] + selection.cost[i] - temp;
+				refundOptions[i] = refundOptions[i] + selection.cost[i] - temp;
 			}
 			else{
 				game.activePlayer.wallet[i] = game.activePlayer.wallet[i] - selection.cost[i];
@@ -198,18 +198,22 @@ public class BuildCard extends Card {
 						case("food"):
 							System.out.println();
 							game.activePlayer.wallet[0] += 1;
+							game.bank[0] -= 1;
 							refundAvailable[0] -= 1;
 							break;
 						case("wood"):
 							game.activePlayer.wallet[1] += 1;
+							game.bank[1] -= 1;
 							refundAvailable[1] -= 1;
 							break;
 						case("gold"):
 							game.activePlayer.wallet[2] += 1;
+							game.bank[2] -= 1;
 							refundAvailable[2] -= 1;
 							break;
 						case("favor"):
 							game.activePlayer.wallet[3] += 1;
+							game.bank[3] -= 1;
 							refundAvailable[3] -= 1;
 							break;
 						default:

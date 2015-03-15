@@ -6,8 +6,8 @@ public class NextAge extends Card{
 	boolean discount;
 	
 	/**
-	 * The constructor for creating a Gather Card with image
-	 *  
+	 * The constructor for a Next Age Card
+	 * 
      * @param front The Card's front image
      * @param back The Card's back image
      * @param permanent True if Card is permanent
@@ -15,7 +15,7 @@ public class NextAge extends Card{
      * @param firstDescription The main Card description
      * @param secondDescription The secondary Card description
      * @param cost The cost to play the Card
-	 * @param gatherBy The method of gathering
+	 * @param discount The discount for the Card
 	 */
 	public NextAge(BufferedImage front, BufferedImage back,
 			boolean permanent, String name, String firstDescription,
@@ -25,15 +25,14 @@ public class NextAge extends Card{
 		this.discount = discount;
 	}
 	
-	public boolean canAfford(Player player, int cost){
-		for(int i = 0; i < 4; i++){
-			if(player.wallet[i] < cost){
-				return false;				
-			}
-		}
-		return true;
-	}
 	
+	/**
+	 * Uses the Player's current age to determine the cost to pass to canAfford
+	 *  
+	 * @param game The game being altered
+	 * @return 0 if the Player can't afford it/ is at the max age. Returns the 
+	 * cost of each resource otherwise
+	 */
 	public int canAffordNextAge(Game game){
 		int cost;
 		switch(game.activePlayer.playerAge){
@@ -70,6 +69,11 @@ public class NextAge extends Card{
 		}
 	}
 	
+	/**
+	 * Executes the Card's effect on the Game
+	 * 
+	 * @param game The game being affected by the card
+	 */
 	public void execute(Game game){
 		int cost = canAffordNextAge(game);
 		if(cost > 0){

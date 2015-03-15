@@ -8,6 +8,17 @@ import java.util.ArrayList;
  * The god card Hera, which is a build card that grants the activePlayer a house
  */
 public class Hera extends BuildCard{
+	
+	/**
+	 * The constructor for the god card Hera
+	 * 
+     * @param front The Card's front image
+     * @param back The Card's back image
+     * @param firstDescription The main Card description
+     * @param secondDescription The secondary Card description
+     * @param value The max number of builds
+     * @param cost The cost to play the Card
+	 */
 	public Hera(BufferedImage front, BufferedImage back, 
 			String firstDescription, String secondDescription, 
 			int value, int cost){
@@ -45,6 +56,7 @@ public class Hera extends BuildCard{
 					}
 					else{
 						game.activePlayer.wallet[3] -= 1;
+						game.bank[3] +=1;
 						addBuilding(game, houseToAdd);
 						System.out.println("The gods have answered your prayers.");	
 					}

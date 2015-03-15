@@ -112,6 +112,9 @@ public class Game implements InitializeGame{
 		}
 	}
 	
+	/**
+	 * The thing Kumin is taking forever to do
+	 */
 	public void setVictoryPoint(){
 		
 	}
@@ -142,6 +145,8 @@ public class Game implements InitializeGame{
 				activePlayer.usedRandomDeck.add(selection);
 			activePlayer.hand.remove(selection);
 			selection.execute(this);
+			ui.displayGamestate("DEBUG PRINTOUT", this);
+			leakDetector(this);
 		}
 	}
 
@@ -249,6 +254,37 @@ public class Game implements InitializeGame{
 		}
 		RandomSelection<Player> selector = new RandomSelection<Player>(winnerCandidates);
 		return selector.getRandomFromList(false);
+	}
+	
+	/**
+	 * Built to detect imbalances in the game's overall funds to error check
+	 * card algorithms. For 3 players, total resources are 37 each
+	 * 
+	 * @param game The game being altered
+	 * @throws IllegalArgumentException The previous action created an imbalance
+	 */
+	public void leakDetector(Game game) throws IllegalArgumentException{
+		int numberOfPlayers = 3;
+		int totalEachResource = 37;
+		int balance;
+		for(int i = 0; i < 4; i++){
+			balance = 0;
+			if(game.activePlayer.wallet[i] < 0){
+				throw new IllegalArgumentException();
+			}
+			if(game.bank[i] < 0){
+				throw new IllegalArgumentException();
+			}
+			for(int j = 0; j < numberOfPlayers; j++){
+				balance += activePlayer.wallet[i];
+				activePlayer = activePlayer.next;
+			}
+			balance += bank[i];
+			if(balance != totalEachResource){
+				System.out.println("!!!!!!!!!!Error at " + i);
+				throw new IllegalArgumentException();
+			}
+		}
 	}
 	
 	/**
