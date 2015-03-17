@@ -13,16 +13,18 @@ public class Game implements InitializeGame{
 	protected Player player3;	
 	protected Player activePlayer;
 	protected ArrayList<ProductionTile> productionPool;
+	protected ArrayList<VictoryBin> victory;
 	protected int[] bank;
 	
 	/**
 	 * The default constructor for a game 
 	 */
 	Game() {
-		player1 = new Player("Player1", false);
+		player1 = new Player("Player1", true);
 		player2 = new Player("Player2", false);
 		player3 = new Player("Player3", false);
-		productionPool  = new ArrayList<ProductionTile>(); 
+		productionPool  = new ArrayList<ProductionTile>();
+		victory = new ArrayList<VictoryBin>();
 		bank = new int[5];
 	}
 	
@@ -112,11 +114,24 @@ public class Game implements InitializeGame{
 		}
 	}
 	
-	/**
-	 * The thing Kumin is taking forever to do
-	 */
-	public void setVictoryPoint(){
-		
+	public void setVictoryPoints(){
+		UserInterface<VictoryBin> manageVictoryPoints = new UserInterface<VictoryBin>();
+		VictoryBin playerSelection;
+		int numberOfPlayers = 3;
+		for(int i = 0; i < 3; i++){
+			if(bank[4] > 0){
+				manageVictoryPoints.provideMenuOptions("Place a Victory cube: ", 
+						this, victory, null);
+				playerSelection = manageVictoryPoints.getPlayerSelection(this, 
+						victory, false);
+				bank[4] --;
+				playerSelection.value ++;
+			}
+			activePlayer = activePlayer.next;
+		}
+		for(int i = 3; i < numberOfPlayers; i++){
+			activePlayer = activePlayer.next;
+		}
 	}
 	
 	/**
@@ -218,6 +233,9 @@ public class Game implements InitializeGame{
 	 */
 	public boolean checkForVictory(){
 		int numberOfPlayers = 3;
+		if(bank[4] ==0){
+			return true;
+		}
 		for(int i = 0; i < numberOfPlayers; i++){
 			for(int j = 0; j < activePlayer.city.size(); j++){
 				if(activePlayer.city.get(j).type == Building.Type.THE_WONDER){
@@ -227,6 +245,37 @@ public class Game implements InitializeGame{
 			activePlayer = activePlayer.next;
 		}
 		return false;
+	}
+	
+	public void assignVictoryPoints(){
+		int numberOfPlayers = 3;
+		ArrayList<Player> mostBuildings = new ArrayList<Player>();
+		int maxBuildings = 0;
+		
+		for(int i = 0; i < numberOfPlayers; i++){
+			for(int j = 0; j < activePlayer.city.size(); j++){
+				if(activePlayer.city.get(j).type == Building.Type.THE_WONDER){
+					activePlayer.wallet[4] += 
+							victory.get(1).value;
+				}
+			}
+			if(activePlayer.city.size() >
+			maxBuildings){	
+				maxBuildings = activePlayer.city.size();
+			}
+			activePlayer = activePlayer.next;
+		}	
+		
+		for(int i = 0; i < numberOfPlayers; i++){
+			if(activePlayer.city.size() == maxBuildings){
+				mostBuildings.add(activePlayer);				
+			}
+			activePlayer = activePlayer.next;
+		}
+		RandomSelection<Player> chooseBuildingWinner = 
+				new RandomSelection<Player>(mostBuildings);
+		(chooseBuildingWinner.getRandomFromList(false)).wallet[4] +=
+				victory.get(0).value;
 	}
 	
 	/**
@@ -294,6 +343,7 @@ public class Game implements InitializeGame{
 		InitializeGame.initialize(this);
 		UserInterface<Game> ui = new UserInterface<Game>();
 		while(!checkForVictory()){
+			setVictoryPoints();
 			drawCards();
 			ui.displayGamestate("CURRENT GAMESTATE:", this);
 			actionCardPhase();
@@ -303,6 +353,8 @@ public class Game implements InitializeGame{
 				discard();
 			}
 		}
+		assignVictoryPoints();
+		ui.displayGamestate("WINNING GAMESTATE:", this);
 		System.out.println("The Winner is: " + (findWinner()).name);
 	}
 	

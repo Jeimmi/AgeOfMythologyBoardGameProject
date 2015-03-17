@@ -17,6 +17,7 @@ public interface InitializeGame{
 		initializePlayerPriority(game);
 		initializePlayerRaces(game);
 		initializeResources(game);
+		initializeVictoryStratgies(game);
 		initializeBuildingPool(game);
 		initializeProductionPool(game);
 		initializePlayerDecks(game);
@@ -80,6 +81,11 @@ public interface InitializeGame{
 		for(int i = turnOrder; i > 0; i--){
 			game.activePlayer = game.activePlayer.next.next;
 		}
+	}
+	
+	public static void initializeVictoryStratgies(Game game){
+		game.victory.add(new VictoryBin(VictoryBin.Strategy.MOST_BUILDINGS));
+		game.victory.add(new VictoryBin(VictoryBin.Strategy.WONDER));
 	}
 
 	/**

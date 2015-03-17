@@ -110,10 +110,12 @@ public class UserInterface <T>{
 		UserInterface<Card> hand = new UserInterface<Card>();
 		UserInterface<ProductionTile> productionArea = new UserInterface<ProductionTile>();
 		UserInterface<Building> cityArea = new UserInterface<Building>();
+		UserInterface<VictoryBin> victory = new UserInterface<VictoryBin>();
 	 
 		System.out.println();
 		System.out.println(title);
 		game.displayFunds("Bank: ", game.bank);
+		victory.displayList("Victory Pools: ", game.victory);
 		for(int i = 0; i < 3; i++){
 			switch(i){
 			case 0:
