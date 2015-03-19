@@ -7,7 +7,7 @@
 
 import java.awt.image.BufferedImage;
 import java.util.*;
-public interface InitializeGame{
+public interface InitializeGame<T>{
 	
 	/**
 	 * 
@@ -56,8 +56,8 @@ public interface InitializeGame{
 		playerRace.add(Player.Race.GREEK);
 		int numberOfPlayers = 3;
 		for(int i = 0; i < numberOfPlayers; i++){
-			RandomSelection<Player.Race> selector = new RandomSelection<Player.Race>(playerRace);
-			game.activePlayer.playerRace = selector.getRandomFromList(true);
+			RandomSelection<Player.Race> selector = new RandomSelection<Player.Race>();
+			game.activePlayer.playerRace = selector.getRandomFromList(playerRace, true, 0);
 			game.activePlayer = game.activePlayer.next;
 		}
 	}
@@ -84,8 +84,8 @@ public interface InitializeGame{
 	}
 	
 	public static void initializeVictoryStratgies(Game game){
-		game.victory.add(new VictoryBin(VictoryBin.Strategy.MOST_BUILDINGS));
-		game.victory.add(new VictoryBin(VictoryBin.Strategy.WONDER));
+		game.victory.add(new VictoryPool(VictoryPool.Strategy.MOST_BUILDINGS));
+		game.victory.add(new VictoryPool(VictoryPool.Strategy.WONDER));
 	}
 
 	/**
@@ -1045,12 +1045,12 @@ public interface InitializeGame{
 	public static void choosePlayerResources(Game game){
 		int numberOfPlayers = 3;
 		RandomSelection<ProductionTile> selector = 
-				new RandomSelection<ProductionTile>(game.productionPool);
+				new RandomSelection<ProductionTile>();
 		ArrayList<ProductionTile> options = new ArrayList<ProductionTile>();
 		boolean reverseFlag = false;
 		
 		for(int i = 0; i < numberOfPlayers*6; i++){
-			options.add(selector.getRandomFromList(true));
+			options.add(selector.getRandomFromList(game.productionPool, true, 0));
 		}
 		for(int i = 0; i < 6; i++){
 			for(int j = 0; j < numberOfPlayers; j++){

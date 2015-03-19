@@ -44,61 +44,6 @@ public class Building {
 	}
 	
 	/**
-     * The constructor for creating a Building with image
-     * 
-     * @param type The the Building type
-     * @param food The Building food cost
-     * @param wood The Building wood cost
-     * @param gold The Building gold cost
-     * @param favor The Building favor cost
-     * @param image The image of the Building
-     */
-	public Building(int food, int wood, int gold, int favor, BufferedImage image){
-		cost[0] = food;
-		cost[1] = wood;
-		cost[2] = gold;
-		cost[3] = favor;
-		this.image = image;
-	}
-	
-	/**
-	 * Gets the cost of the Building
-	 * 
-	 * @return The cost of the Building
-	 */
-	int[] getCost(){
-		return cost;
-	}
-	
-	/**
-	 * Sets the cost of the Building
-	 * 
-	 * @param type The the Building type
-     * @param food The Building food cost
-     * @param wood The Building wood cost
-     * @param gold The Building gold cost
-	 */
-	public void setCost(int food, int wood, int gold, int favor){
-		cost[0] = food;
-		cost[1] = wood;
-		cost[2] = gold;
-		cost[3] = favor;
-	}
-	
-	/**
-	 * Reduces the cost of a building resource by 1
-	 * 
-	 * @param building The the Building to be reduced
-     * @param resource The resource to be reduced
-	 */
-	public Building reduce(Building building, int resource){
-		Building temp = new Building(building.type, building.cost[0], building.cost[1], 
-				building.cost[2], building.cost[3]);
-		temp.cost[resource] = temp.cost[resource] - 1;
-		return temp;
-	}
-	
-	/**
 	 * Overrides Objec.toString to allow to print building
 	 * 
 	 * @return A String for printing

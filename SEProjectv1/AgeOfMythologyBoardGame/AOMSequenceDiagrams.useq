@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.8" icons="true">  
+  <object id="1" language="java" name="Player" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Player.java" binary="false" label="player" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="19" y="0"/>  
+  </object>  
+  <object id="2" language="java" name="Game" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Game.java" binary="false" label="game" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="101" y="0"/>  
+  </object>  
+  <object id="3" language="java" name="UserInterface" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/UserInterface.java" binary="false" label="userInterface" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="252" y="0"/>  
+  </object>  
+  <object id="4" language="java" name="BuildCard" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/BuildCard.java" binary="false" label="buildCard" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="530" y="0"/>  
+  </object>
+</sequence-diagram>

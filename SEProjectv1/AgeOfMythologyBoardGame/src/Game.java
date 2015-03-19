@@ -13,18 +13,18 @@ public class Game implements InitializeGame{
 	protected Player player3;	
 	protected Player activePlayer;
 	protected ArrayList<ProductionTile> productionPool;
-	protected ArrayList<VictoryBin> victory;
+	protected ArrayList<VictoryPool> victory;
 	protected int[] bank;
 	
 	/**
 	 * The default constructor for a game 
 	 */
 	Game() {
-		player1 = new Player("Player1", true);
+		player1 = new Player("Player1", false);
 		player2 = new Player("Player2", false);
 		player3 = new Player("Player3", false);
 		productionPool  = new ArrayList<ProductionTile>();
-		victory = new ArrayList<VictoryBin>();
+		victory = new ArrayList<VictoryPool>();
 		bank = new int[5];
 	}
 	
@@ -59,6 +59,31 @@ public class Game implements InitializeGame{
 				System.out.print(" , ");
 		}
 		System.out.println("");
+	}
+	
+	
+	/**
+	 * Allows the first 3 players to place a victory point in a victory bin
+	 * before drawing cards
+	 */
+	public void setVictoryPoints(){
+		UserInterface<VictoryPool> manageVictoryPoints = new UserInterface<VictoryPool>();
+		VictoryPool playerSelection;
+		int numberOfPlayers = 3;
+		for(int i = 0; i < 3; i++){
+			if(bank[4] > 0){
+				manageVictoryPoints.provideMenuOptions("Place a Victory cube: ", 
+						this, victory, null);
+				playerSelection = manageVictoryPoints.getPlayerSelection(this, 
+						victory, false);
+				bank[4] --;
+				playerSelection.value ++;
+			}
+			activePlayer = activePlayer.next;
+		}
+		for(int i = 3; i < numberOfPlayers; i++){
+			activePlayer = activePlayer.next;
+		}
 	}
 	
 	/**
@@ -99,7 +124,7 @@ public class Game implements InitializeGame{
 					activePlayer.permanentDeck.remove(choice);	
 				}
 			}
-			while((activePlayer.hand.size() <= handSize) && (choice != null) && (activePlayer.randomDeck.size() > 1));
+			while((activePlayer.hand.size() < handSize) && (choice != null) && (activePlayer.randomDeck.size() > 0));
 			while(activePlayer.hand.size() < handSize){
 				if(activePlayer.randomDeck.size() == 0){
 					while(activePlayer.usedRandomDeck.size() != 0){
@@ -107,29 +132,9 @@ public class Game implements InitializeGame{
 						activePlayer.usedRandomDeck.remove(activePlayer.usedRandomDeck.get(0));
 					}
 				}
-				RandomSelection<Card> selector = new RandomSelection<Card>(activePlayer.randomDeck);
-				activePlayer.hand.add(selector.getRandomFromList(true));
+				RandomSelection<Card> selector = new RandomSelection<Card>();
+				activePlayer.hand.add(selector.getRandomFromList(activePlayer.randomDeck, true, 0));
 			}
-			activePlayer = activePlayer.next;
-		}
-	}
-	
-	public void setVictoryPoints(){
-		UserInterface<VictoryBin> manageVictoryPoints = new UserInterface<VictoryBin>();
-		VictoryBin playerSelection;
-		int numberOfPlayers = 3;
-		for(int i = 0; i < 3; i++){
-			if(bank[4] > 0){
-				manageVictoryPoints.provideMenuOptions("Place a Victory cube: ", 
-						this, victory, null);
-				playerSelection = manageVictoryPoints.getPlayerSelection(this, 
-						victory, false);
-				bank[4] --;
-				playerSelection.value ++;
-			}
-			activePlayer = activePlayer.next;
-		}
-		for(int i = 3; i < numberOfPlayers; i++){
 			activePlayer = activePlayer.next;
 		}
 	}
@@ -153,7 +158,7 @@ public class Game implements InitializeGame{
 		if(!checkForVictory()){
 			UserInterface<Card> ui = new UserInterface<Card>();
 			ui.provideMenuOptions("Select an Action Card to play: ", this, activePlayer.hand, null);
-			Card selection = ui.getPlayerSelection(this, activePlayer.hand, true);
+			Card selection = ui.getPlayerSelection(this, activePlayer.hand, false);
 			if(selection.permanent)
 				activePlayer.permanentDeck.add(selection);
 			else
@@ -247,6 +252,10 @@ public class Game implements InitializeGame{
 		return false;
 	}
 	
+	/**
+	 * Manages the distribution of certain victory bins to players at the end
+	 * of the game, before the winner is determined 
+	 */
 	public void assignVictoryPoints(){
 		int numberOfPlayers = 3;
 		ArrayList<Player> mostBuildings = new ArrayList<Player>();
@@ -273,8 +282,8 @@ public class Game implements InitializeGame{
 			activePlayer = activePlayer.next;
 		}
 		RandomSelection<Player> chooseBuildingWinner = 
-				new RandomSelection<Player>(mostBuildings);
-		(chooseBuildingWinner.getRandomFromList(false)).wallet[4] +=
+				new RandomSelection<Player>();
+		(chooseBuildingWinner.getRandomFromList(mostBuildings, false, 0)).wallet[4] +=
 				victory.get(0).value;
 	}
 	
@@ -301,8 +310,8 @@ public class Game implements InitializeGame{
 			}
 			activePlayer = activePlayer.next;
 		}
-		RandomSelection<Player> selector = new RandomSelection<Player>(winnerCandidates);
-		return selector.getRandomFromList(false);
+		RandomSelection<Player> selector = new RandomSelection<Player>();
+		return selector.getRandomFromList(winnerCandidates, false, 0);
 	}
 	
 	/**

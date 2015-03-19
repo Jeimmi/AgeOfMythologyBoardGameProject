@@ -47,12 +47,12 @@ public class UserInterface <T>{
 	 */
 	public T getPlayerSelection(Game game, ArrayList<T> options, boolean passOption){
 		int passAvailable = 0;
+		if(passOption){
+			passAvailable ++;
+		}
 		if(game.activePlayer.human){
 			Scanner input = new Scanner(System.in);
 			int selection = -99;
-			if(passOption){
-				passAvailable ++;
-			}
 	
 			while((selection < 0) || (selection >= options.size() + passAvailable)){
 				if(selection != -99){
@@ -69,8 +69,8 @@ public class UserInterface <T>{
 		}
 		else if(options.size() > 0){
 			displayGamestate("Current gamestate...", game);
-			RandomSelection<T> optionsList = new RandomSelection<T>(options);
-			T selection = optionsList.getRandomFromList(false);
+			RandomSelection<T> optionsList = new RandomSelection<T>();
+			T selection = optionsList.getRandomFromList(options, false, passAvailable);
 			return selection;
 		}
 		else{
@@ -110,7 +110,7 @@ public class UserInterface <T>{
 		UserInterface<Card> hand = new UserInterface<Card>();
 		UserInterface<ProductionTile> productionArea = new UserInterface<ProductionTile>();
 		UserInterface<Building> cityArea = new UserInterface<Building>();
-		UserInterface<VictoryBin> victory = new UserInterface<VictoryBin>();
+		UserInterface<VictoryPool> victory = new UserInterface<VictoryPool>();
 	 
 		System.out.println();
 		System.out.println(title);

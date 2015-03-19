@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence-diagram version="1.1.8" icons="true">  
+  <object id="1" language="java" name="VictoryBin.Strategy" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/VictoryBin.java" binary="false" label="strategy" type="enumeration" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="2" language="java" name="VictoryBin" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/VictoryBin.java" binary="false" label="victoryBin" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="3" language="java" name="UserInterface" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/UserInterface.java" binary="false" label="userInterface" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="4" language="java" name="RandomSelection" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/RandomSelection.java" binary="false" label="randomSelection" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="5" language="java" name="ProductionTile.Terrain" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/ProductionTile.java" binary="false" label="terrain" type="enumeration" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="6" language="java" name="ProductionTile" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/ProductionTile.java" binary="false" label="productionTile" type="class" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="7" language="java" name="Player.Race" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Player.java" binary="false" label="race" type="enumeration" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="8" language="java" name="Player.Age" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Player.java" binary="false" label="age" type="enumeration" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="9" language="java" name="Player" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Player.java" binary="false" label="player" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="10" language="java" name="NextAge" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/NextAge.java" binary="false" label="nextAge" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="11" language="java" name="Nephthys" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Nephthys.java" binary="false" label="nephthys" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="12" language="java" name="InitializeGame" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/InitializeGame.java" binary="false" label="initializeGame" type="interface" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="13" language="java" name="Horus" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Horus.java" binary="false" label="horus" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="14" language="java" name="Hera" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Hera.java" binary="false" label="hera" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="15" language="java" name="GatherCard.GatherType" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/GatherCard.java" binary="false" label="gatherType" type="enumeration" 
+    autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="16" language="java" name="GatherCard" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/GatherCard.java" binary="false" label="gatherCard" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="17" language="java" name="Game" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Game.java" binary="false" label="game" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="18" language="java" name="Card" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Card.java" binary="false" label="card" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="19" language="java" name="Building.Type" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Building.java" binary="false" label="type" type="enumeration" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="20" language="java" name="Building" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/Building.java" binary="false" label="building" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>  
+  <object id="21" language="java" name="BuildCard" project="AgeOfMythologyBoardGame" 
+    file="/AgeOfMythologyBoardGame/src/BuildCard.java" binary="false" label="buildCard" type="class" autoSize="true">    
+    <position height="-1" width="-1" x="400" y="0"/>  
+  </object>
+</sequence-diagram>
