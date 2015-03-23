@@ -1,0 +1,12 @@
+
+public class VictoryBin {
+	
+	protected enum Strategy{WONDER, MOST_BUILDINGS, GREATEST_ARMY, LAST_BATTLE};
+	protected Strategy strategy;
+	protected int value;
+	
+	public VictoryBin(VictoryBin.Strategy strategy){
+		this.strategy = strategy;
+		value = 0;
+	}
+}

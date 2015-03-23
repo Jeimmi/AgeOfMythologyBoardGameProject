@@ -1,0 +1,11 @@
+import java.awt.image.BufferedImage;
+
+
+public class Hera extends BuildCard{
+	public Hera(BufferedImage front, BufferedImage back, 
+			String firstDescription, String secondDescription, 
+			int value, int cost){
+		super(front, back, false, "Hera", firstDescription,	
+			secondDescription, value,cost);
+	}
+}

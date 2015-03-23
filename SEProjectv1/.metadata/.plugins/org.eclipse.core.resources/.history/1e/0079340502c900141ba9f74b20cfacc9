@@ -1,0 +1,130 @@
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
+
+public class Nephthys extends BuildCard{
+	public Nephthys(BufferedImage front, BufferedImage back, 
+			String firstDescription, String secondDescription, 
+			int value, int cost){
+	super(front, back, false, "Nephthys", firstDescription,	
+			secondDescription, value,cost);
+	}
+	public void execute(Game game){
+		int numberOfPlayers = 3;
+		//Player playerDestroy;
+		//Building cityDestroy;
+		ArrayList<String> tollMessage = new ArrayList<String>();
+		//ArrayList<Player> playerTargets = new ArrayList<Player>();
+		//ArrayList<String> targetNames = new ArrayList<String>();
+		UserInterface<String> handleToll = new UserInterface<String>();
+		//UserInterface<Player> selectPlayerTargets = new UserInterface<Player>();
+		//UserInterface<String> displayTargetNames = new UserInterface<String>();
+		//UserInterface<Building> handleTargetCity = new UserInterface<Building>();
+		
+		tollMessage.add("Pay one favor to prove you are worthy.");
+		handleToll.provideMenuOptions("Pay tribute to your god?", game, 
+				tollMessage, "Run away in fear...");
+		
+		if(handleToll.getPlayerSelection(game, tollMessage, true) != null){
+			if(game.activePlayer.wallet[3] < 2){
+				System.out.println("The gods deem you unworthy!!!");
+			}
+			else{
+			/*	for(int i = 0; i < numberOfPlayers; i++){
+					playerTargets.add(game.activePlayer);
+					targetNames.add(game.activePlayer.name);
+					game.activePlayer = game.activePlayer.next;	
+				}*/
+				game.activePlayer.wallet[3] -= 2;
+				/*displayTargetNames.provideMenuOptions(
+						"Select the victim of a cataclysm.", game, targetNames, 
+						"Demand mercy for your tribute");
+				playerDestroy = selectPlayerTargets.getPlayerSelection(
+						game, playerTargets, true);
+				if(playerDestroy == null){
+					System.out.println("The gods have answered your prayers.");			
+				}
+				else{
+					handleTargetCity.provideMenuOptions("Which of " + 
+							playerDestroy.name + "'s cites"	+ 
+							" shall suffer my wrath?", game, playerDestroy.city,
+							"Demand mercy for your tribute");
+					cityDestroy = handleTargetCity.getPlayerSelection(game, playerDestroy.city, true);
+					playerDestroy.buildingPool.add(cityDestroy);
+					playerDestroy.city.remove(cityDestroy);
+					if(cityDestroy == null){*/
+				System.out.println("The gods have answered your prayers.");	
+			}
+		}
+		
+		
+		
+		if(game.activePlayer.city.size() < 16){
+			UserInterface<Building> buildingSelect = new UserInterface<Building>();
+			UserInterface<String> refundSelect = new UserInterface<String>(); 
+			ArrayList<String> resources = new ArrayList<String>();
+			resources.add("food");
+			resources.add("wood");
+			resources.add("gold");
+			resources.add("favor");
+			int discount = 2;
+			for(int i = 0; i < game.activePlayer.city.size(); i++){
+				if((game.activePlayer.city.get(i)).type == Building.Type.QUARRY){
+					discount = 3;
+				}
+			}
+			int builds = value;
+			
+			for(int i = 0; i < builds; i++){
+				int[] refundAvailable = {0, 0, 0, 0};
+				int discountUsed = 0;
+				ArrayList<Building> options = populateAffordable(game.activePlayer, discount);
+				buildingSelect.provideMenuOptions("Please select a building to build from the following:", 
+						game, options, "Pass remainder of turn");
+				Building selection = buildingSelect.getPlayerSelection(game, options, true);
+				if(selection == null){
+					i = builds;
+				}
+				else{
+					discountUsed = discountUsed + buildBuilding(game, selection, refundAvailable);
+				}
+				for(int j = 0; j < discount - discountUsed; j++){
+					ArrayList<String> refundOptions = new ArrayList<String>();
+					for(int k = 0; k < 4; k++){
+						if(refundAvailable[k] > 0){
+							refundOptions.add(resources.get(k));
+						}
+					}
+					if(refundOptions.size() > 0){
+						refundSelect.provideMenuOptions("Select a refund: ", game,
+								refundOptions, null);
+						String refund = refundSelect.getPlayerSelection(
+								game, refundOptions, false);
+						switch(refund){
+						case("food"):
+							System.out.println();
+							game.activePlayer.wallet[0] += 1;
+							refundAvailable[0] -= 1;
+							break;
+						case("wood"):
+							game.activePlayer.wallet[1] += 1;
+							refundAvailable[1] -= 1;
+							break;
+						case("gold"):
+							game.activePlayer.wallet[2] += 1;
+							refundAvailable[2] -= 1;
+							break;
+						case("favor"):
+							game.activePlayer.wallet[3] += 1;
+							refundAvailable[3] -= 1;
+							break;
+						default:
+								break;
+						}
+					}
+				}
+			}
+		}
+		// TODO Auto-generated method stub
+	}
+}

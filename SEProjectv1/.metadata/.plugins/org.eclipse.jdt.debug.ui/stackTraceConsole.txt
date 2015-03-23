@@ -1,0 +1,4 @@
+<terminated>Game [Java Application]	
+	<terminated>Game at localhost:61239	
+	<terminated, exit value: 0>C:\Program Files\Java\jre1.8.0_25\bin\javaw.exe (Mar 17, 2015, 8:16:22 PM)	
+
